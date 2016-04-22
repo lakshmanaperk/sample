@@ -65,7 +65,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     ToggleButton sdkStatusToggle, notifications;
     Button buttonOpenSDK, twiceBtn, onceBtn, thriceBtn, getUserInfo,
             getNotificationCount, claimNotificationPage, dataPointsPage,
-            loginStatus, rewards, loadAdButton, loadVideoAdButton, loadDisplayAdButton, publisherbalance,countryList;
+            loginStatus, rewards, loadAdButton, /*loadDisplayAdButton,  loadVideoAdButton ,*/  publisherbalance,countryList;
     Animation slideLeft, slideRight, flyUp, flyDown;
     TextView logger;
     ImageView profile_image;
@@ -105,8 +105,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
         rewards = (Button) findViewById(R.id.rewards);
         countryList = (Button)findViewById(R.id.countryList);
         loadAdButton = (Button) findViewById(R.id.loadAd);
-        loadVideoAdButton = (Button) findViewById(R.id.loadVideoAd);
-        loadDisplayAdButton = (Button) findViewById(R.id.loadDisplayAd);
+//        loadVideoAdButton = (Button) findViewById(R.id.loadVideoAd);
+//        loadDisplayAdButton = (Button) findViewById(R.id.loadDisplayAd);
         profile_image = (ImageView) findViewById(R.id.profile_image);
         publisherbalance = (Button) findViewById(R.id.publisherbalance);
         buttonOpenSDK.setOnClickListener(new DelayedClickHandler() {
@@ -242,23 +242,23 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        loadVideoAdButton.setOnClickListener(new DelayedClickHandler() {
-            @Override
-            public void onClick(View v) {
-                super.onClick(v);
-
-                PerkManager.showVideoAdUnit(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
-            }
-        });
-
-        loadDisplayAdButton.setOnClickListener(new DelayedClickHandler() {
-            @Override
-            public void onClick(View v) {
-                super.onClick(v);
-
-                PerkManager.showDisplayAdUnit(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
-            }
-        });
+//        loadVideoAdButton.setOnClickListener(new DelayedClickHandler() {
+//            @Override
+//            public void onClick(View v) {
+//                super.onClick(v);
+//
+//                PerkManager.showVideoAdUnit(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+//            }
+//        });
+//
+//        loadDisplayAdButton.setOnClickListener(new DelayedClickHandler() {
+//            @Override
+//            public void onClick(View v) {
+//                super.onClick(v);
+//
+//                PerkManager.showDisplayAdUnit(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
+//            }
+//        });
 
         notifications = (ToggleButton) findViewById(R.id.notifications);
         PerkManager.enableEventNotifications(true);

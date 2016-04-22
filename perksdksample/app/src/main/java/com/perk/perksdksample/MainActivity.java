@@ -524,7 +524,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
         //todo:replace hacky event handling with real events including code and message
         switch (message) {
-            case "SDKClaimBannerCloseNotification":
+            case "claimNotificationClosed":
                 // do Your Stuff here
                 break;
             default:

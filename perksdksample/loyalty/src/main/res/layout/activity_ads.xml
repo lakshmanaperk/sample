@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:id="@+id/root">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:id="@+id/points_container"
+        android:padding="@dimen/container_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/ad_balance_label"
+            android:id="@+id/label_balance"
+            android:textColor="#8b979a"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/perk_star"
+            android:layout_toStartOf="@+id/value_points"
+            android:layout_toLeftOf="@+id/value_points"
+            android:layout_below="@+id/label_balance"
+            android:layout_above="@+id/label_points"
+            android:contentDescription="@string/descriptor_perk_star"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/value_points"
+            android:layout_below="@+id/label_balance"
+            android:textColor="#ffffff"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/default_perk_points"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="20dp"
+            android:inputType="number"
+            android:ellipsize="marquee"
+            android:enabled="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/ad_perk_points"
+            android:id="@+id/label_points"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/value_points"
+            android:textColor="@color/perkPointsLabel" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/header_container"
+        android:layout_below="@+id/points_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/points_container_top_margin"
+        android:padding="@dimen/container_padding" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/passive_play_enabled_text"
+            android:layout_alignBottom="@+id/passive_play_disabled_text"
+            android:layout_alignTop="@+id/passive_play_disabled_text">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ad_next_text"
+                android:id="@+id/flavor_text_next"
+                android:textSize="@dimen/flavor_text_size"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignBottom="@+id/next_ad_timer"
+                android:layout_alignTop="@+id/next_ad_timer"
+                android:layout_toLeftOf="@+id/next_ad_timer"
+                android:singleLine="true"
+                android:layout_alignBaseline="@+id/next_ad_timer" />
+
+            <com.perk.perksdk.widget.CountdownTimer
+                custom:time="10"
+                android:layout_width="@dimen/next_ad_timer_width_and_height"
+                android:layout_height="@dimen/next_ad_timer_width_and_height"
+                android:id="@+id/next_ad_timer"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/passive_play_disabled_text"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ad_watch_text"
+                android:id="@+id/flavor_text_watch"
+                android:textSize="@dimen/flavor_text_size"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:singleLine="true"
+                android:layout_alignTop="@+id/info_icon"
+                android:layout_alignBottom="@+id/info_icon" />
+
+            <ImageView
+                android:layout_width="@dimen/next_ad_timer_width_and_height"
+                android:layout_height="@dimen/next_ad_timer_width_and_height"
+                android:id="@+id/info_icon"
+                android:contentDescription="@string/descriptor_info_icon"
+                android:visibility="visible"
+                android:layout_toRightOf="@+id/flavor_text_watch"
+                android:padding="10dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/control_container"
+        android:layout_below="@+id/header_container">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/watch_more"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/descriptor_watch_more"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="20dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/collect_points"
+            android:layout_below="@+id/watch_more"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/descriptor_collect_points"
+            android:layout_alignLeft="@+id/watch_more"
+            android:layout_alignRight="@+id/watch_more"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="@dimen/top_margin" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/footer"
+        android:id="@+id/points_toaster"
+        android:gravity="center"
+        android:background="#3e3e3e"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/toaster_perk_star"
+            android:contentDescription="@string/descriptor_perk_star"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/toaster_text"
+            android:id="@+id/toaster_text"
+            android:layout_toRightOf="@+id/toaster_perk_star"
+            android:textColor="@android:color/white"
+            android:gravity="center_vertical" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/footer"
+        android:background="#3e3e3e"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/ad_flavor_text"
+            android:id="@+id/flavor_text"
+            android:textColor="@android:color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="@dimen/footer_text_size"
+            android:maxLines="3"
+            android:layout_toStartOf="@+id/learn_more"
+            android:layout_toLeftOf="@+id/learn_more"
+            android:padding="5dp" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:id="@+id/learn_more"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/logo"
+            android:layout_alignEnd="@+id/logo"
+            android:contentDescription="@string/descriptor_learn_more"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:id="@+id/logo"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/descriptor_logo"
+            android:layout_below="@+id/learn_more" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/perk1" android:duration="30" />
+    <item android:drawable="@drawable/perk2" android:duration="30" />
+    <item android:drawable="@drawable/perk3" android:duration="30" />
+    <item android:drawable="@drawable/perk4" android:duration="30" />
+    <item android:drawable="@drawable/perk5" android:duration="30" />
+    <item android:drawable="@drawable/perk6" android:duration="30" />
+    <item android:drawable="@drawable/perk7" android:duration="30" />
+    <item android:drawable="@drawable/perk8" android:duration="30" />
+    <item android:drawable="@drawable/perk9" android:duration="30" />
+    <item android:drawable="@drawable/perk10" android:duration="30" />
+ </animation-list>

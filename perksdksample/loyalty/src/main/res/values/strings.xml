@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Perk SDK</string>
+    <string name="app_name_debug">[DEBUG] Perk SDK</string>
+    <string name="ad_next_text">Next video will load automatically in…</string>
+    <string name="ad_next_text_retry"> No videos are available. Retrying...</string>
+    <string name="ad_watch_text">Watch to collect Perk Points</string>
+    <string name="ad_flavor_text">Perk Points means Gift Cards, Prizes and Cash!</string>
+    <string name="default_perk_points">0</string>
+    <string name="ad_balance_label">YOUR BALANCE</string>
+    <string name="ad_perk_points">PERK POINTS</string>
+    <string name="descriptor_learn_more">Learn more about Perk points.</string>
+    <string name="descriptor_logo">Perk logo.</string>
+    <string name="descriptor_collect_points">Click to collect points.</string>
+    <string name="descriptor_watch_more">Click to watch another video.</string>
+    <string name="descriptor_info_icon">Click for additional information.</string>
+    <string name="descriptor_perk_star">Perk star.</string>
+    <string name="countdown_timer_level_list">CountdownTimer LevelList</string>
+    <string name="countdown_default_value">00</string>
+    <string name="text_close_learn_more"><u>Close</u></string>
+    <string name="descriptor_close_dialog">Close this dialog.</string>
+    <string name="descriptor_points_to_cash">Points to cash image.</string>
+    <string name="dialog_learn_more_header">Perk Points = Cash!</string>
+    <string name="dialog_learn_more_description_1">Perk Points are a fun way of rewarding you for achievements and moments in apps like this one!</string>
+    <string name="dialog_learn_more_description_2">Perk Points can be exchanged for gift cards, cash, prizes and more. Start claiming them today!</string>
+    <string name="descriptor_learn_more_button">Click to learn more about Perk Points.</string>
+    <string name="toaster_text">+1 Perk Point!</string>
+    <string name="error_not_perk_app">context must implement PerkAppInterface</string>
+    <string name="error_not_init_listener">context must implement Init.onLoadListener</string>
+    <string name="error_not_ad_listener">context must implement Ad.onLoadListener</string>
+    <string name="scheme_survey">datapoints</string>
+</resources>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+                android:background="@android:color/darker_gray"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="SDK Events"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/header"
+        android:textColor="#000000"
+        android:textAlignment="gravity"
+        android:gravity="center_horizontal" />
+
+    <RelativeLayout
+        android:id="@+id/buttonOpenSDK_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:gravity="center_horizontal">
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="1dp"
+        android:visibility="invisible"/>
+        <Button
+            android:id="@+id/buttonOpenSDK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Open Portal"
+            android:layout_toRightOf="@+id/profile_image"
+            android:layout_centerHorizontal="true" />
+    <Button
+        android:id="@+id/publisherbalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/buttonOpenSDK"
+        android:layout_alignTop="@+id/buttonOpenSDK"
+        android:text="Publisher Balance" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonOpenSDK_layout"
+        android:id="@+id/tap_event_container"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/onceBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap Once" />
+
+        <Button
+            android:id="@+id/twiceBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap Twice"
+            android:layout_toRightOf="@+id/onceBtn" />
+
+        <Button
+            android:id="@+id/thriceBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap Thrice"
+            android:layout_toRightOf="@+id/twiceBtn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/load_ad_container"
+        android:layout_below="@+id/tap_event_container"
+        android:gravity="center_horizontal"
+        android:layout_alignParentEnd="false">
+
+        <Button
+            android:id="@+id/loadAd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Load Ad" />
+
+        <Button
+            android:id="@+id/loadVideoAd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Load Video Ad"
+            android:layout_toRightOf="@+id/loadAd" />
+
+        <Button
+            android:id="@+id/loadDisplayAd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Load Display Ad"
+            android:layout_toRightOf="@+id/loadVideoAd" />
+
+    </RelativeLayout>
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/notifications"
+        android:layout_below="@+id/load_ad_container"
+        android:layout_centerHorizontal="true"
+        android:textOff="Notifications OFF"
+        android:textOn="Notifications ON"
+        android:checked="false" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/misc_container"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/notifications">
+        <Button
+            android:id="@+id/launchDatapoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Launch Datapoints"/>
+        <Button
+            android:id="@+id/countryList"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/launchDatapoints"
+            android:layout_height="wrap_content"
+            android:text="Country List"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/yet_another_container"
+        android:layout_below="@+id/misc_container"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/getNotificationCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Unread Count" />
+
+        <Button
+            android:id="@+id/claimNotificationPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unclaimed Page"
+            android:layout_toRightOf="@+id/getNotificationCount" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Check for SDK Status &amp; Customization of Claim"
+        android:layout_below="@+id/yet_another_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="#000000"
+        android:id="@+id/check_label" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_container"
+        android:layout_below="@+id/check_label"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/loginstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:enabled="false"
+            android:text="Login User" />
+
+        <Button
+            android:id="@+id/getUserPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="User Perk Points"
+            android:layout_toRightOf="@+id/loginstatus" />
+
+        <Button
+            android:id="@+id/rewards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="rewards"
+            android:layout_toRightOf="@+id/getUserPoints" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sdk_functions"
+        android:layout_below="@+id/user_container"
+        android:gravity="center_horizontal">
+
+
+        <ToggleButton
+            android:id="@+id/checkUserToggleStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:enabled="false"
+            android:text="Toggle Status SDK Status"
+            android:layout_toRightOf="@+id/appSettings"
+            android:textOn="SDK enabled"
+            android:textOff="SDK disabled" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/divider"
+        android:layout_below="@+id/sdk_functions"
+        android:background="#000000"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="false">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/log_container" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/log"
+                android:textColor="#000000"
+                android:layout_alignParentEnd="false"
+                android:padding="5dp" />
+        </ScrollView>
+    </RelativeLayout>
+
+
+</RelativeLayout>

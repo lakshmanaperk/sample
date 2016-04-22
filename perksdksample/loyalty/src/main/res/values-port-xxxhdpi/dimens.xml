@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="points_container_top_margin">10dp</dimen>
-    <dimen name="footer_text_size">20sp</dimen>
-</resources>

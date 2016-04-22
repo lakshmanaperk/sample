@@ -1,1 +1,2 @@
 include ':app', ':loyalty'
+project(':loyalty').projectDir=new File('../../perk-sdk-android/loyalty')

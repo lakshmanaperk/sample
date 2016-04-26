@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.perk.perksdk.PerkSDKActivity"
+            android:name="com.perk.perksdk.web.PerkSDKActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
         </activity>
@@ -56,12 +56,12 @@
             android:theme="@android:style/Theme.DeviceDefault.Dialog" >
         </activity>
         <activity
-            android:name="com.perk.perksdk.AdsActivity"
+            android:name="com.perk.perksdk.ads.AdsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar">
         </activity>
-        <activity android:name="com.perk.perksdk.FacebookAdNetworkActivity"
+        <activity android:name="com.perk.perksdk.ads.FacebookAdNetworkActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"/>
         <activity

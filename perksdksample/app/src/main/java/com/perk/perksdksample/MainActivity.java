@@ -36,7 +36,6 @@ import android.widget.ToggleButton;
 
 import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.PerkManager;
-import com.perk.perksdk.app.PerkUserInfo;
 import com.perk.perksdk.app.PerkAppInterface;
 import com.perk.perksdk.utils.DelayedClickHandler;
 
@@ -60,9 +59,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
     /**
      * In App params
      */
-    String geoIPStatus = "Allowed", tapOnceEvent = "ON", tapTwiceEvent = "ON",
-            tapThriceEvent = "ON", crossButtonCheck = "ON";
-    ToggleButton sdkStatusToggle, notifications;
+    String  tapOnceEvent = "ON", tapTwiceEvent = "ON",
+            tapThriceEvent = "ON";
+    ToggleButton sdkStatusToggle;
     Button buttonOpenSDK, twiceBtn, onceBtn, thriceBtn, getUserInfo,
             getNotificationCount, claimNotificationPage, dataPointsPage,
             loginStatus, rewards, loadAdButton, loadVideoAdButton, loadDisplayAdButton, publisherbalance,countryList;
@@ -206,7 +205,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.launchDataPoints(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+                PerkManager.launchSurvey(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
             }
         });
 
@@ -216,7 +215,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-                if (PerkManager.getIsUserLoggedIn(MainActivity.this)) {
+                if (PerkManager.isPerkUserLoggedIn()) {
                     PerkManager.logoutUser(MainActivity.this);
                 }
                 else {
@@ -238,7 +237,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showAdUnit(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+                PerkManager.showAd(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
             }
         });
 
@@ -247,7 +246,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showVideoAdUnit(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+                PerkManager.showVideoAd(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
             }
         });
 
@@ -256,20 +255,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showDisplayAdUnit(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
+                PerkManager.showStaticAd(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
             }
         });
 
-        notifications = (ToggleButton) findViewById(R.id.notifications);
-        PerkManager.enableEventNotifications(true);
-        notifications.setOnClickListener(new DelayedClickHandler(HALF_SECOND_DELAY) {
-            @Override
-            public void onClick(View v) {
-                super.onClick(v);
-
-                PerkManager.toggleNotifications();
-            }
-        });
         sdkStatusToggle = (ToggleButton) findViewById(R.id.checkUserToggleStatus);
         sdkStatusToggle.setOnClickListener(new DelayedClickHandler() {
             @Override
@@ -329,58 +318,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     protected void onResume() {
         super.onResume();
-        String adBlock, geoIP, tapOnce, tapTwice, tapThrice, crossCheck;
-
-        SharedPreferences prefs = getSharedPreferences(APP_SETTINGS, 0);
-        adBlock = prefs.getString("adBlock", "");
-        geoIP = prefs.getString("geoIP", "");
-        tapOnce = prefs.getString("tapOnce", "");
-        tapTwice = prefs.getString("tapTwice", "");
-        tapThrice = prefs.getString("tapThrice", "");
-        crossCheck = prefs.getString("closeButtonCheck", "");
-
-        if (adBlock.equals("OFF")) {
-            PerkManager.setAdBlockStatus("OFF");
-
-        }
-        else {
-            PerkManager.setAdBlockStatus("ON");
-        }
-
-        if (geoIP.equals("Allowed")) {
-            geoIPStatus = "Allowed";
-        }
-        else {
-            geoIPStatus = "Restricted";
-        }
-
-        if (tapOnce.equals("OFF")) {
-            tapOnceEvent = "OFF";
-        }
-        else {
-            tapOnceEvent = "ON";
-        }
-
-        if (tapTwice.equals("OFF")) {
-            tapTwiceEvent = "OFF";
-        }
-        else {
-            tapTwiceEvent = "ON";
-        }
-
-        if (tapThrice.equals("OFF")) {
-            tapThriceEvent = "OFF";
-        }
-        else {
-            tapThriceEvent = "ON";
-        }
-
-        if (crossCheck.equals("OFF")) {
-            crossButtonCheck = "OFF";
-        }
-        else {
-            crossButtonCheck = "ON";
-        }
 
         if (PerkManager.getUserAccessToken(getApplicationContext()).length() > 0) {
             loginStatus.setText("Logout user");
@@ -446,16 +383,16 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onUserInformation(boolean statusCode, PerkUserInfo userInfo) {
-        if (statusCode == true && userInfo != null) {
+    public void onUserInformation(boolean statusCode) {
+        if (statusCode == true) {
             try {
-                String userId = userInfo.getUserId();
-                String userEmail = userInfo.getUserEmail();
-                String userFirstName = userInfo.getUserFirstName();
-                String userLastName = userInfo.getUserLastName();
-                String profileImage = userInfo.getUserProfileImageUrl();
-                int userAvailablePoints = userInfo.getUserAvailablePoints();
-                int userPendingPoints = userInfo.getUserPendingPoints();
+                String userId = PerkManager.getPerkUserId();
+                String userEmail = PerkManager.getPerkUserEmail();
+                String userFirstName = PerkManager.getPerkUserFirstName();
+                String userLastName = PerkManager.getPerkUserLastName();
+                String profileImage = PerkManager.getPerkUserProfileImageUrl();
+                int userAvailablePoints = PerkManager.getPerkUserAvailablePoints();
+                int userPendingPoints = PerkManager.getPerkUserPendingPoints();
 
                 if (userinfoclicked == true) {
                     Toast.makeText(
@@ -475,7 +412,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         else {
             Toast.makeText(
                     getApplicationContext(),
-                    "User Has Total " + PerkManager.getPerkAvailablePoints(MainActivity.this)
+                    "User Has Total " + PerkManager.getPerkUserAvailablePoints()
                             + " Perk Points",
                     Toast.LENGTH_SHORT).show();
         }
@@ -510,7 +447,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         else {
             Toast.makeText(
                     getApplicationContext(),
-                    "User Has Total " + PerkManager.updatePublisherAvailablePoints(MainActivity.this)
+                    "User Has Total " + prepaidPoints
                             + " Perk Points",
                     Toast.LENGTH_SHORT).show();
         }
@@ -571,7 +508,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void showEarningDialog() {
 
                 //Verify that this isn't zero.
-                if (PerkManager.getEventPoints() == 0) {
+                if (PerkManager.getAchievementPoints() == 0) {
                     return;
                 }
 
@@ -660,7 +597,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 customearningdialog.getWindow().setBackgroundDrawable(
                         new ColorDrawable(Color.TRANSPARENT));
 
-                int eventPoint = PerkManager.getEventPoints();
+                int eventPoint = PerkManager.getAchievementPoints();
 
                 if (eventPoint > 1) {
                     earnedPointsBanner.setText("Perk Points!");
@@ -671,8 +608,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     claimButton.setText("Claim");
                 }
 
-                notificationText.setText("You've earned " + PerkManager.getPointsText() + " Points " + PerkManager.getNotificationText());
-                earnedPoints.setText("+" + PerkManager.getEventPoints());
+                notificationText.setText("You've earned " + PerkManager.getAchievementPoints() + " Points " + PerkManager.getAchievementNotiticationText());
+                earnedPoints.setText("+" + PerkManager.getAchievementPoints());
 
                 closeButton.setOnClickListener(new DelayedClickHandler() {
                     @Override
@@ -690,10 +627,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     @Override
                     public void onClick(View v) {
                         super.onClick(v);
-
-                        PerkManager.showAlertInfo(MainActivity.this);
                     }
-
                 });
 
 
@@ -846,7 +780,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 customreturndialog.getWindow().setBackgroundDrawable(
                         new ColorDrawable(Color.TRANSPARENT));
 
-                int totalearnedpoints = PerkManager.getEventPoints();
+                int totalearnedpoints = PerkManager.getAchievementPoints();
 
                 if (totalearnedpoints > 1) {
                     earnedPointsBanner.setText("Perk Points!");
@@ -855,7 +789,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     earnedPointsBanner.setText("Perk Point!");
                 }
 
-                notificationText.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getNotificationText());
+                notificationText.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getAchievementNotiticationText());
                 earnedPoints.setText("+" + totalearnedpoints);
 
                 closeButton.setOnClickListener(new DelayedClickHandler() {
@@ -874,8 +808,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     @Override
                     public void onClick(View v) {
                         super.onClick(v);
-
-                        PerkManager.showAlertInfo(MainActivity.this);
                     }
 
                 });

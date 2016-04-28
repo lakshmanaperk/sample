@@ -108,23 +108,13 @@
 
     </RelativeLayout>
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/notifications"
-        android:layout_below="@+id/load_ad_container"
-        android:layout_centerHorizontal="true"
-        android:textOff="Notifications OFF"
-        android:textOn="Notifications ON"
-        android:checked="false" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/misc_container"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/notifications">
+        android:layout_below="@+id/load_ad_container">
         <Button
             android:id="@+id/launchDatapoints"
             android:layout_width="wrap_content"

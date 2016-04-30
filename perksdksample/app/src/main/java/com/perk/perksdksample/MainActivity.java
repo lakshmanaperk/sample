@@ -219,6 +219,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 super.onClick(v);
                 if (PerkManager.isPerkUserLoggedIn()) {
                     PerkManager.logoutUser(MainActivity.this);
+                    loginStatus.setText("Login User");
                 }
                 else {
                     PerkManager.launchLoginPage(MainActivity.this, "");

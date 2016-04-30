@@ -140,7 +140,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 userinfoclicked = true;
-                if (PerkManager.getUserInfo(getApplicationContext()) == false) {
+                if (PerkManager.getPerkUserInfo(getApplicationContext()) == false) {
                     Toast.makeText(getApplicationContext(), "Login PERK to see Points",
                             Toast.LENGTH_SHORT).show();
                     userinfoclicked = false;
@@ -267,7 +267,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-                PerkManager.toggleSdkStatus(MainActivity.this);
+                PerkManager.togglePerkSdkStatus(MainActivity.this);
             }
         });
         publisherbalance.setOnClickListener(new View.OnClickListener() {
@@ -325,7 +325,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
             if (sdkStatusToggle.isEnabled()) {
-                PerkManager.getUserInfo(getApplicationContext());
+                PerkManager.getPerkUserInfo(getApplicationContext());
             }
         }
         else {
@@ -349,7 +349,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         loginStatus.setEnabled(true);
         if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
-            PerkManager.getUserInfo(getApplicationContext());
+            PerkManager.getPerkUserInfo(getApplicationContext());
         }
         else {
             loginStatus.setText("Login user");

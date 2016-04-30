@@ -34,10 +34,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.perk.perksdk.api.Constants;
 import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
 import com.perk.perksdk.utils.DelayedClickHandler;
+import com.perk.perksdk.utils.Utils;
 
 import java.io.InputStream;
 
@@ -319,7 +321,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     protected void onResume() {
         super.onResume();
 
-        if (PerkManager.getUserAccessToken(getApplicationContext()).length() > 0) {
+        if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
             if (sdkStatusToggle.isEnabled()) {
                 PerkManager.getUserInfo(getApplicationContext());
@@ -328,7 +330,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         else {
             loginStatus.setText("Login user");
         }
-        sdkStatusToggle.setChecked(PerkManager.GetSDKStatus());
+        sdkStatusToggle.setChecked(PerkManager.getPerkSDKStatus());
     }
 
     @Override
@@ -344,7 +346,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         sdkStatusToggle.setChecked(statusCode);
         sdkStatusToggle.setEnabled(true);
         loginStatus.setEnabled(true);
-        if (PerkManager.getUserAccessToken(getApplicationContext()).length() > 0) {
+        if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
             PerkManager.getUserInfo(getApplicationContext());
         }

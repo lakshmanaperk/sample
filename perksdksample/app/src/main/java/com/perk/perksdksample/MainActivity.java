@@ -34,12 +34,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.perk.perksdk.api.Constants;
 import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
 import com.perk.perksdk.utils.DelayedClickHandler;
-import com.perk.perksdk.utils.Utils;
 
 import java.io.InputStream;
 

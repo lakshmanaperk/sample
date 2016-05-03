@@ -101,7 +101,7 @@
                 android:singleLine="true"
                 android:layout_alignBaseline="@+id/next_ad_timer" />
 
-            <com.perk.perksdk.widget.CountdownTimer
+            <com.perk.perksdk.sdkwidget.CountdownTimer
                 custom:time="10"
                 android:layout_width="@dimen/next_ad_timer_width_and_height"
                 android:layout_height="@dimen/next_ad_timer_width_and_height"

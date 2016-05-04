@@ -28,12 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.perk.extended.App_SDK_Settings_Activity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
         <activity android:name="com.appsaholic.CommercialBreakSDKActivity"
                   android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
@@ -44,6 +38,21 @@
         </activity>
         <activity
             android:name="com.perk.perksdk.sdkwebpage.PerkSDKActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.perk.perksdk.sdkwebpage.MainPortalView"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.perk.perksdk.sdkwebpage.LoginPortalView"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.perk.perksdk.sdkwebpage.PerkRewardsView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
         </activity>

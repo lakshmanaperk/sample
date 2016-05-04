@@ -220,7 +220,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     loginStatus.setText("Login User");
                 }
                 else {
-                    PerkManager.launchLoginPage(MainActivity.this, "");
+                    PerkManager.launchLoginPage(MainActivity.this);
                 }
             }
         });

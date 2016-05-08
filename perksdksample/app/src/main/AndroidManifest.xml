@@ -42,22 +42,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.perk.perksdk.sdkwebpage.MainPortalView"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="com.perk.perksdk.sdkwebpage.LoginPortalView"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="com.perk.perksdk.sdkwebpage.PerkRewardsView"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="com.perk.perksdk.sdkwebpage.UnClaimedView"
+            android:name="com.perk.perksdk.sdkwebpage.PerkSDKWebView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
         </activity>

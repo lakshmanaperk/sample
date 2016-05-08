@@ -657,7 +657,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     public void onClick(View v) {
                         super.onClick(v);
 
-                        PerkManager.claimPoints(MainActivity.this, eventId);
+                        PerkManager.claimPoints(MainActivity.this);
                         customearningdialog.dismiss();
                     }
                 });

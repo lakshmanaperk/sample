@@ -657,7 +657,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     public void onClick(View v) {
                         super.onClick(v);
 
-                        PerkManager.claimPoints(MainActivity.this);
+                        PerkManager.claimEvent(MainActivity.this);
                         customearningdialog.dismiss();
                     }
                 });
@@ -781,7 +781,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 customreturndialog.getWindow().setBackgroundDrawable(
                         new ColorDrawable(Color.TRANSPARENT));
 
-                int totalearnedpoints = PerkManager.getAchievementPoints();
+                int totalearnedpoints = PerkManager.getEventTotalPoints();
 
                 if (totalearnedpoints > 1) {
                     earnedPointsBanner.setText("Perk Points!");

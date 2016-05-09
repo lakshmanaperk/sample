@@ -37,11 +37,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.perk.perksdk.sdkwebpage.PerkSDKActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name="com.perk.perksdk.sdkwebpage.PerkSDKWebView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
@@ -55,7 +50,7 @@
             android:theme="@android:style/Theme.DeviceDefault.Dialog" >
         </activity>
         <activity
-            android:name="com.perk.perksdk.sdkads.AdsActivity"
+            android:name="com.perk.perksdk.sdkads.AdActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar">

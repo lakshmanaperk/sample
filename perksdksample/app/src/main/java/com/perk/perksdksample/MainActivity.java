@@ -37,6 +37,7 @@ import android.widget.ToggleButton;
 import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
+import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
 
 import java.io.InputStream;
@@ -113,7 +114,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showPortal(MainActivity.this);
+                PerkManager.showPortal(MainActivity.this,"portal");
             }
         });
 
@@ -138,7 +139,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 userinfoclicked = true;
-                if (PerkManager.getPerkUserInfo(getApplicationContext()) == false) {
+                if (PerkManager.fetch(getApplicationContext(),"userInfo") == false) {
                     Toast.makeText(getApplicationContext(), "Login PERK to see Points",
                             Toast.LENGTH_SHORT).show();
                     userinfoclicked = false;
@@ -180,7 +181,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         countryList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PerkManager.getCountriesList(MainActivity.this);
+                PerkManager.fetch(MainActivity.this,"supportedCountries");
             }
         });
 
@@ -188,7 +189,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-                PerkManager.fetchNotificationsCount(MainActivity.this);
+                PerkManager.fetch(MainActivity.this,"notifications");
             }
         });
 
@@ -196,7 +197,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-                PerkManager.claimNotificationPage(MainActivity.this);
+                PerkManager.showPortal(MainActivity.this,"unclaimed");
             }
         });
 
@@ -220,7 +221,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     loginStatus.setText("Login User");
                 }
                 else {
-                    PerkManager.launchLoginPage(MainActivity.this);
+                    PerkManager.showPortal(MainActivity.this,"login");
                 }
             }
         });
@@ -229,7 +230,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-                PerkManager.showPrizePage(getApplicationContext());
+                PerkManager.showPortal(getApplicationContext(),"rewards");
             }
         });
 
@@ -271,7 +272,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         publisherbalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PerkManager.getPublisherAvailablePoints(MainActivity.this);
+                PerkManager.fetch(MainActivity.this,"publisherPointBalance");
             }
         });
     }
@@ -323,7 +324,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
             if (sdkStatusToggle.isEnabled()) {
-                PerkManager.getPerkUserInfo(getApplicationContext());
+                PerkManager.fetch(getApplicationContext(),"userInfo");
             }
         }
         else {
@@ -347,7 +348,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         loginStatus.setEnabled(true);
         if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
-            PerkManager.getPerkUserInfo(getApplicationContext());
+            PerkManager.fetch(getApplicationContext(),"userInfo");
         }
         else {
             loginStatus.setText("Login user");
@@ -384,16 +385,16 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onUserInformation(boolean statusCode) {
+    public void onUserInformation(boolean statusCode, PerkUserInfo info) {
         if (statusCode == true) {
             try {
-                String userId = PerkManager.getPerkUserId();
-                String userEmail = PerkManager.getPerkUserEmail();
-                String userFirstName = PerkManager.getPerkUserFirstName();
-                String userLastName = PerkManager.getPerkUserLastName();
-                String profileImage = PerkManager.getPerkUserProfileImageUrl();
-                int userAvailablePoints = PerkManager.getPerkUserAvailablePoints();
-                int userPendingPoints = PerkManager.getPerkUserPendingPoints();
+                String userId = info.getUserId();
+                String userEmail = info.getUserEmail();
+                String userFirstName = info.getUserFirstName();
+                String userLastName = info.getUserLastName();
+                String profileImage = info.getUserProfileImageUrl();
+                int userAvailablePoints = info.getUserAvailablePoints();
+                int userPendingPoints = info.getUserPendingPoints();
 
                 if (userinfoclicked == true) {
                     Toast.makeText(

@@ -696,7 +696,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
 
             @Override
-            public void showReturnNotfication() {
+            public void showReturnNotification() {
 
 
                 if (customreturndialog != null && customreturndialog.isShowing()) {

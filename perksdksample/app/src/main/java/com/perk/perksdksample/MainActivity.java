@@ -321,6 +321,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     protected void onResume() {
         super.onResume();
 
+        sdkStatusToggle.setChecked(PerkManager.getPerkSDKStatus());
         if (PerkManager.isPerkUserLoggedIn() == true) {
             loginStatus.setText("Logout user");
             if (sdkStatusToggle.isEnabled()) {
@@ -330,7 +331,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         else {
             loginStatus.setText("Login user");
         }
-        sdkStatusToggle.setChecked(PerkManager.getPerkSDKStatus());
+
     }
 
     @Override

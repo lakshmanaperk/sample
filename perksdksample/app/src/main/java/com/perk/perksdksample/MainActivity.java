@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     public static final String TAP_ONCE_EVENT = "1037c884e25ac9faa84986c38bca8e99ccc07340";
 
     public static final long HALF_SECOND_DELAY = 500L;
-    Dialog customreturndialog, customearningdialog;
+    Dialog customReturnDialog, customEarningDialog;
     /**
      * SDK Stuff
      */
@@ -514,8 +514,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     return;
                 }
 
-                if (customearningdialog != null && customearningdialog.isShowing()) {
-                    customearningdialog.dismiss();
+                if (customEarningDialog != null && customEarningDialog.isShowing()) {
+                    customEarningDialog.dismiss();
                 }
 
                 slideRight = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -566,23 +566,23 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 ImageButton closeButton;
 
 
-                customearningdialog = new Dialog(MainActivity.this);
-                customearningdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                customearningdialog.setContentView(R.layout.event_notification);
+                customEarningDialog = new Dialog(MainActivity.this);
+                customEarningDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                customEarningDialog.setContentView(R.layout.event_notification);
 
-                notificationTextLayout = (RelativeLayout) customearningdialog.findViewById(R.id.notificationTextLayout);
-                claimButtonLayout = (RelativeLayout) customearningdialog.findViewById(R.id.claimButtonLayout);
-                notificationText = (TextView) customearningdialog.findViewById(R.id.notificationText);
-                earnedPoints = (TextView) customearningdialog.findViewById(R.id.earnedPoints);
-                earnedPointsBanner = (TextView) customearningdialog.findViewById(R.id.earnedPointsBanner);
-                claimButton = (Button) customearningdialog.findViewById(R.id.claimButton);
-                closeButton = (ImageButton) customearningdialog.findViewById(R.id.closeButton);
+                notificationTextLayout = (RelativeLayout) customEarningDialog.findViewById(R.id.notificationTextLayout);
+                claimButtonLayout = (RelativeLayout) customEarningDialog.findViewById(R.id.claimButtonLayout);
+                notificationText = (TextView) customEarningDialog.findViewById(R.id.notificationText);
+                earnedPoints = (TextView) customEarningDialog.findViewById(R.id.earnedPoints);
+                earnedPointsBanner = (TextView) customEarningDialog.findViewById(R.id.earnedPointsBanner);
+                claimButton = (Button) customEarningDialog.findViewById(R.id.claimButton);
+                closeButton = (ImageButton) customEarningDialog.findViewById(R.id.closeButton);
 
                 if (closeButtonCheck.equals("ON")) {
-                    customearningdialog.setCanceledOnTouchOutside(false);
+                    customEarningDialog.setCanceledOnTouchOutside(false);
                 }
                 else {
-                    customearningdialog.setCanceledOnTouchOutside(true);
+                    customEarningDialog.setCanceledOnTouchOutside(true);
                     closeButton.setVisibility(View.INVISIBLE);
                 }
 
@@ -596,7 +596,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 claimButton.setBackgroundColor(Color.parseColor(btnColor));
                 claimButton.setTextColor(Color.parseColor(btnTextColor));
 
-                customearningdialog.getWindow().setBackgroundDrawable(
+                customEarningDialog.getWindow().setBackgroundDrawable(
                         new ColorDrawable(Color.TRANSPARENT));
 
                 int eventPoint = PerkManager.getAchievementPoints();
@@ -618,12 +618,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     public void onClick(View v) {
                         super.onClick(v);
 
-                        customearningdialog.dismiss();
+                        customEarningDialog.dismiss();
                     }
                 });
 
 
-                ImageButton btnInfo = (ImageButton) customearningdialog.findViewById(R.id.btnInfo);
+                ImageButton btnInfo = (ImageButton) customEarningDialog.findViewById(R.id.btnInfo);
                 btnInfo.setOnClickListener(new DelayedClickHandler() {
 
                     @Override
@@ -633,7 +633,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 });
 
 
-                Window window = customearningdialog.getWindow();
+                Window window = customEarningDialog.getWindow();
                 WindowManager.LayoutParams wlp = window.getAttributes();
                 wlp.copyFrom(window.getAttributes());
                 wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -659,11 +659,11 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         super.onClick(v);
 
                         PerkManager.claimEvent(MainActivity.this);
-                        customearningdialog.dismiss();
+                        customEarningDialog.dismiss();
                     }
                 });
 
-                customearningdialog.show();
+                customEarningDialog.show();
 
                 if (animation.equals("Slide Left")) {
                     notificationTextLayout.setAnimation(slideLeft);
@@ -699,8 +699,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void showReturnNotification() {
 
 
-                if (customreturndialog != null && customreturndialog.isShowing()) {
-                    customreturndialog.dismiss();
+                if (customReturnDialog != null && customReturnDialog.isShowing()) {
+                    customReturnDialog.dismiss();
                 }
 
                 slideRight = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -751,23 +751,23 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 Button claimButton;
 
 
-                customreturndialog = new Dialog(MainActivity.this);
-                customreturndialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                customreturndialog.setContentView(R.layout.event_notification);
+                customReturnDialog = new Dialog(MainActivity.this);
+                customReturnDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                customReturnDialog.setContentView(R.layout.event_notification);
 
-                notificationTextLayout = (RelativeLayout) customreturndialog.findViewById(R.id.notificationTextLayout);
-                claimButtonLayout = (RelativeLayout) customreturndialog.findViewById(R.id.claimButtonLayout);
-                notificationText = (TextView) customreturndialog.findViewById(R.id.notificationText);
-                earnedPoints = (TextView) customreturndialog.findViewById(R.id.earnedPoints);
-                earnedPointsBanner = (TextView) customreturndialog.findViewById(R.id.earnedPointsBanner);
-                claimButton = (Button) customreturndialog.findViewById(R.id.claimButton);
-                closeButton = (ImageButton) customreturndialog.findViewById(R.id.closeButton);
+                notificationTextLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.notificationTextLayout);
+                claimButtonLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.claimButtonLayout);
+                notificationText = (TextView) customReturnDialog.findViewById(R.id.notificationText);
+                earnedPoints = (TextView) customReturnDialog.findViewById(R.id.earnedPoints);
+                earnedPointsBanner = (TextView) customReturnDialog.findViewById(R.id.earnedPointsBanner);
+                claimButton = (Button) customReturnDialog.findViewById(R.id.claimButton);
+                closeButton = (ImageButton) customReturnDialog.findViewById(R.id.closeButton);
 
                 if (closeButtonCheck.equals("ON")) {
-                    customreturndialog.setCanceledOnTouchOutside(false);
+                    customReturnDialog.setCanceledOnTouchOutside(false);
                 }
                 else {
-                    customreturndialog.setCanceledOnTouchOutside(true);
+                    customReturnDialog.setCanceledOnTouchOutside(true);
                     closeButton.setVisibility(View.INVISIBLE);
                 }
 
@@ -779,7 +779,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 earnedPoints.setTextColor(Color.parseColor(fontColor));
                 earnedPointsBanner.setTextColor(Color.parseColor(fontColor));
                 claimButton.setVisibility(View.GONE);
-                customreturndialog.getWindow().setBackgroundDrawable(
+                customReturnDialog.getWindow().setBackgroundDrawable(
                         new ColorDrawable(Color.TRANSPARENT));
 
                 int totalearnedpoints = PerkManager.getEventTotalPoints();
@@ -799,12 +799,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     public void onClick(View v) {
                         super.onClick(v);
 
-                        customreturndialog.dismiss();
+                        customReturnDialog.dismiss();
                     }
                 });
 
 
-                ImageButton btnInfo = (ImageButton) customreturndialog.findViewById(R.id.btnInfo);
+                ImageButton btnInfo = (ImageButton) customReturnDialog.findViewById(R.id.btnInfo);
                 btnInfo.setOnClickListener(new DelayedClickHandler() {
 
                     @Override
@@ -815,7 +815,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 });
 
 
-                Window window = customreturndialog.getWindow();
+                Window window = customReturnDialog.getWindow();
                 WindowManager.LayoutParams wlp = window.getAttributes();
                 wlp.copyFrom(window.getAttributes());
                 wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -836,7 +836,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 window.setAttributes(wlp);
 
 
-                customreturndialog.show();
+                customReturnDialog.show();
 
                 if (animation.equals("Slide Left")) {
                     notificationTextLayout.setAnimation(slideLeft);

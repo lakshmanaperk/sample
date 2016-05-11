@@ -3,10 +3,16 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 android {
+    signingConfigs {
+        perk {
+            keyAlias 'perk'
+            keyPassword 'perk123'
+            storeFile file('/Users/lakshmana/projects/android/perk/perkRelease.keystore')
+            storePassword 'perk123'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
-
     defaultConfig {
         applicationId "com.perk.perksdksample"
         minSdkVersion 16
@@ -18,8 +24,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            jniDebuggable true
+            signingConfig signingConfigs.perk
+            renderscriptDebuggable true
+            pseudoLocalesEnabled true
+        }
+        debug {
+            jniDebuggable true
+            signingConfig signingConfigs.perk
+            renderscriptDebuggable true
         }
     }
+
 }
 
 dependencies {

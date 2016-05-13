@@ -1,248 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-                android:background="@android:color/darker_gray"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="12"
+                    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="SDK Events"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/header"
-        android:textColor="#000000"
-        android:textAlignment="gravity"
-        android:gravity="center_horizontal" />
-
-    <RelativeLayout
-        android:id="@+id/buttonOpenSDK_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:gravity="center_horizontal">
-
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:padding="1dp"
-        android:visibility="invisible"/>
-        <Button
-            android:id="@+id/buttonOpenSDK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="Open Portal"
-            android:layout_toRightOf="@+id/profile_image"
-            android:layout_centerHorizontal="true" />
-    <Button
-        android:id="@+id/publisherbalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/buttonOpenSDK"
-        android:layout_alignTop="@+id/buttonOpenSDK"
-        android:text="Publisher Balance" />
-        </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonOpenSDK_layout"
-        android:id="@+id/tap_event_container"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/onceBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tap Once" />
-
-        <Button
-            android:id="@+id/twiceBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tap Twice"
-            android:layout_toRightOf="@+id/onceBtn" />
-
-        <Button
-            android:id="@+id/thriceBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tap Thrice"
-            android:layout_toRightOf="@+id/twiceBtn" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/load_ad_container"
-        android:layout_below="@+id/tap_event_container"
-        android:gravity="center_horizontal"
-        android:layout_alignParentEnd="false">
-
-        <Button
-            android:id="@+id/loadAd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Load Ad" />
-
-        <Button
-            android:id="@+id/loadVideoAd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Load Video Ad"
-            android:layout_toRightOf="@+id/loadAd" />
-
-        <Button
-            android:id="@+id/loadDisplayAd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Load Display Ad"
-            android:layout_toRightOf="@+id/loadVideoAd" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/misc_container"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/load_ad_container">
-        <Button
-            android:id="@+id/launchDatapoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Launch Datapoints"/>
-        <Button
-            android:id="@+id/countryList"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@+id/launchDatapoints"
-            android:layout_height="wrap_content"
-            android:text="Country List"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/yet_another_container"
-        android:layout_below="@+id/misc_container"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/getNotificationCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show Unread Count" />
-
-        <Button
-            android:id="@+id/claimNotificationPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Unclaimed Page"
-            android:layout_toRightOf="@+id/getNotificationCount" />
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Check for SDK Status &amp; Customization of Claim"
-        android:layout_below="@+id/yet_another_container"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textColor="#000000"
-        android:id="@+id/check_label" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/user_container"
-        android:layout_below="@+id/check_label"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/loginstatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:enabled="false"
-            android:text="Login User" />
-
-        <Button
-            android:id="@+id/getUserPoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="User Perk Points"
-            android:layout_toRightOf="@+id/loginstatus" />
-
-        <Button
-            android:id="@+id/rewards"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="rewards"
-            android:layout_toRightOf="@+id/getUserPoints" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sdk_functions"
-        android:layout_below="@+id/user_container"
-        android:gravity="center_horizontal">
-
-
-        <ToggleButton
-            android:id="@+id/checkUserToggleStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:enabled="false"
-            android:text="Toggle Status SDK Status"
-            android:textOn="SDK enabled"
-            android:textOff="SDK disabled" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/divider"
-        android:layout_below="@+id/sdk_functions"
-        android:background="#000000"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentTop="false">
-
-        <ScrollView
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="2">
+        <LinearLayout
+            android:id="@+id/subleft"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/log_container" >
-
-            <TextView
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="10">
+            <LinearLayout
+                android:id="@+id/loggedin_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:background="@drawable/border_rect"
+                android:layout_margin="3dp"
+                android:weightSum="10"
+                android:layout_weight="6">
+                <ImageView
+                    android:id="@+id/user_image"
+                    android:layout_weight="3"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/border_rect"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_weight="1"
+                    android:text="Paul Haung"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/user_email"
+                    android:layout_weight="1"
+                    android:text="paul@perk.com"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/user_points"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Perk Points : 23333"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/user_ppoints"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Pending Points : 155"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/user_id"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:text="perk ID : 212121"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/user_status_logout"
+                        android:text="Logout User"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        />
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ico_info"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/loggedout_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="3dp"
+                android:visibility="visible"
+                android:background="@drawable/border_rect"
+                android:weightSum="10"
+                android:layout_weight="6">
+                <TextView
+                    android:id="@+id/no_user_info"
+                    android:layout_width="wrap_content"
+                    android:text="No User Info"
+                    android:textSize="20sp"
+                    android:layout_weight="3"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Login For"
+                    android:textSize="30sp"
+                    android:layout_weight="2.5"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="User Info"
+                    android:textSize="30sp"
+                    android:layout_weight="2.5"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+                <Button
+                    android:id="@+id/user_status_login"
+                    android:text="Login User"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    />
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ico_info"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/sdkstatus"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_rect"
+                android:layout_weight="2">
+                <TextView
+                    android:text="SDK Disabled"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/events"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_gravity="center"
+                android:weightSum="3"
+                android:layout_weight="2">
+                <Button
+                    android:id="@+id/tap_once"
+                    android:text="TAP ONCE"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/tap_twice"
+                    android:text="TAP TWICE (Custom)"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/tap_thrice"
+                    android:text="TAP THRICE"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/subright"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/log"
-                android:textColor="#000000"
-                android:layout_alignParentEnd="false"
-                android:padding="5dp" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="9">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="3">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Portal Pages"/>
+                    <Button
+                        android:text="Portal Page"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Unclaimed Page"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Rewards Page"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="3">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Fetchable Pages"/>
+                    <Button
+                        android:text="Unclaimed Count"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Supported Countries"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Publisher Balance"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="3">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Serving Ads"/>
+                    <Button
+                        android:text="Show Ad"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Show Survey"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Show 2 Ads"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:text="Show 3 Ads W/Loader"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="2">
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/sdk_event_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </ScrollView>
-    </RelativeLayout>
-
-
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

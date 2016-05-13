@@ -262,6 +262,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
+                sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
                 PerkManager.togglePerkSdkStatus(MainActivity.this);
             }
         });

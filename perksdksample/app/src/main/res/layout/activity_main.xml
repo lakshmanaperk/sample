@@ -157,19 +157,25 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/border_rect"
+                android:weightSum="2"
                 android:layout_weight="2">
                 <TextView
                     android:id="@+id/sdk_status_text"
                     android:text="SDK Disabled"
+                    android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Switch
                     android:id="@+id/sdk_status_switch"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:thumb="@drawable/customswitchselector"
+                    android:track="@drawable/custom_track"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <LinearLayout

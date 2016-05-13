@@ -14,7 +14,7 @@
                 android:radius="5dp"/>
             <size
                 android:width="40dp"
-                android:height="20dp" />
+                android:height="30dp" />
             <stroke
                 android:width="4dp"
                 android:color="#0000ffff"/>
@@ -34,7 +34,7 @@
                 android:radius="5dp"/>
             <size
                 android:width="40dp"
-                android:height="20dp" />
+                android:height="30dp" />
             <stroke
                 android:width="4dp"
                 android:color="#0000ffff"/>

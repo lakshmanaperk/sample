@@ -175,6 +175,8 @@
                     android:textStyle="bold"
                     android:thumb="@drawable/customswitchselector"
                     android:track="@drawable/custom_track"
+                    android:switchTextAppearance="@style/SwitchTextAppearance"
+                    android:thumbTextPadding="5dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>

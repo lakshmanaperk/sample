@@ -34,7 +34,6 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.PerkManager;
@@ -42,7 +41,6 @@ import com.perk.perksdk.app.PerkAppInterface;
 import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
 
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 
@@ -139,7 +137,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         userPoints = (TextView)findViewById(R.id.user_points);
         userPendingPoints = (TextView)findViewById(R.id.user_ppoints);
         userPerkId = (TextView)findViewById(R.id.user_id);
-
+        sdkStatusSwitch.setEnabled(false);
         portalPage.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
@@ -236,7 +234,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showAd(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+                PerkManager.showAds(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7",1,false);
             }
         });
 
@@ -245,7 +243,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showVideoAd(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+                PerkManager.showAds(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7",2,false);
             }
         });
 
@@ -254,7 +252,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
 
-                PerkManager.showStaticAd(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
+                PerkManager.showAds(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c",3,true);
             }
         });
 
@@ -264,6 +262,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 super.onClick(v);
                 sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
                 PerkManager.togglePerkSdkStatus(MainActivity.this);
+                sdkStatusSwitch.setEnabled(false);
+
             }
         });
         publisherBalance.setOnClickListener(new View.OnClickListener() {
@@ -374,6 +374,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onSdkStatus(boolean statusCode, boolean sdkStatus) {
+        sdkStatusSwitch.setEnabled(true);
         sdkStatusSwitch.setChecked(sdkStatus);
 
         if(sdkStatus) {

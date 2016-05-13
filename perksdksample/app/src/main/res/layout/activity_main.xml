@@ -36,8 +36,8 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/border_rect"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"/>
                 <TextView
                     android:id="@+id/user_name"
                     android:layout_weight="1"
@@ -68,6 +68,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -89,9 +90,11 @@
                         android:padding="5dp"
                         />
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/ico_info"/>
+                        android:id="@+id/user_status_in"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/userinfo"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -145,9 +148,11 @@
                     android:layout_marginRight="5dp"
                     />
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/ico_info"/>
+                        android:id="@+id/user_status_out"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/userinfo"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -177,6 +182,7 @@
                     android:track="@drawable/custom_track"
                     android:switchTextAppearance="@style/SwitchTextAppearance"
                     android:thumbTextPadding="5dp"
+                    android:paddingBottom="2dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
@@ -189,9 +195,17 @@
                 android:layout_gravity="center"
                 android:weightSum="3"
                 android:layout_weight="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="2dp"
+                    android:textSize="15dp"
+                    android:text="Achievements"/>
                 <Button
                     android:id="@+id/tap_once"
-                    android:text="TAP ONCE"
+                    android:text="Tap Once"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:minHeight="0dp"
@@ -203,7 +217,7 @@
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/tap_twice"
-                    android:text="TAP TWICE (Custom)"
+                    android:text="Tap Twice (Custom)"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:minHeight="0dp"
@@ -215,7 +229,7 @@
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/tap_thrice"
-                    android:text="TAP THRICE"
+                    android:text="Tap Thrice"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:minHeight="0dp"

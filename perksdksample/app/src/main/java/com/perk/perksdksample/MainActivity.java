@@ -3,6 +3,7 @@ package com.perk.perksdksample;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -11,12 +12,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -24,7 +25,6 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -36,12 +36,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
+import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
-
 
 import java.io.InputStream;
 
@@ -73,10 +72,11 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     IntentFilter perkManagerFilter;
 
-    LinearLayout loggedInLayout , loggedOutLayout;
+    LinearLayout loggedInLayout , loggedOutLayout,borderView;
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
+    float b_x,b_y;
     ImageView userProfileImage,userStatusIn, userStatusOut;
 
 
@@ -140,6 +140,46 @@ public class MainActivity extends Activity implements PerkAppInterface {
         userPendingPoints = (TextView)findViewById(R.id.user_ppoints);
         userPerkId = (TextView)findViewById(R.id.user_id);
         sdkStatusSwitch.setEnabled(false);
+
+        borderView = (LinearLayout)findViewById(R.id.border);
+
+        borderView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                b_x = borderView.getX();
+                b_y = borderView.getY();
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(borderView);
+                borderView.startDrag(data, shadowBuilder, borderView, 0);
+                borderView.setBackgroundColor(Color.parseColor("#00FF00"));
+                return false;
+            }
+        });
+
+        borderView.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                b_x = borderView.getX();
+                b_y = borderView.getY();
+                switch (event.getAction()) {
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        break;
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        break;
+                    case DragEvent.ACTION_DROP:
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+
         portalPage.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
@@ -316,7 +356,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         fadeOut.setInterpolator(new AccelerateInterpolator());
         fadeOut.setDuration(1000);
 
-        fadeOut.setAnimationListener(new AnimationListener() {
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
             public void onAnimationEnd(Animation animation) {
                 rlp.setVisibility(View.INVISIBLE);
             }
@@ -335,7 +375,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
         @Override
         public void onReceive(Context arg0, Intent arg1) {
-            String thestr = arg1.getStringExtra("notification");
         }
 
     }

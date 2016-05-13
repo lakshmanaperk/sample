@@ -28,8 +28,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -39,6 +41,8 @@ import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
 import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
+
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 
@@ -60,18 +64,22 @@ public class MainActivity extends Activity implements PerkAppInterface {
     /**
      * In App params
      */
-    String  tapOnceEvent = "ON", tapTwiceEvent = "ON",
-            tapThriceEvent = "ON";
-    ToggleButton sdkStatusToggle;
-    Button buttonOpenSDK, twiceBtn, onceBtn, thriceBtn, getUserInfo,
-            getNotificationCount, claimNotificationPage, dataPointsPage,
-            loginStatus, rewards, loadAdButton, loadVideoAdButton, loadDisplayAdButton, publisherbalance,countryList;
+    Button tapTwiceBtn, tapOnceBtn, tapThriceBtn,portalPage, unclaimedPage,
+            rewardsPage,unclaimedCount,supportedCountries,publisherBalance,showAds,showTwoAds,
+            showThreeAdsWithLoader,showSurvey,loginUser,logoutUser;
+
     Animation slideLeft, slideRight, flyUp, flyDown;
-    TextView logger;
-    ImageView profile_image;
-    ScrollView logScrollView;
-    boolean userinfoclicked = false;
+
+    TextView userName,userEmail,userPoints,userPendingPoints,userPerkId,logger,sdkStatusText;
+
     IntentFilter perkManagerFilter;
+
+    LinearLayout loggedInLayout , loggedOutLayout;
+    ScrollView logScrollView;
+    Switch sdkStatusSwitch;
+
+    ImageView userProfileImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +90,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         perkManagerFilter.addCategory(Intent.CATEGORY_DEFAULT);
         receiver = new PerkManagerReceiver();
         registerReceiver(receiver, perkManagerFilter);
-        logger = (TextView) findViewById(R.id.log);
+        logger = (TextView) findViewById(R.id.sdk_event_log);
         logScrollView = (ScrollView) findViewById(R.id.log_container);
         logger.setText(getInstanceInfo());
         logger.setOnLongClickListener(new View.OnLongClickListener() {
@@ -93,99 +101,101 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
         PerkManager.startSession(MainActivity.this,MainActivity.this,"81000a9d5407667548eb3ceec9dc699823a02ba9");
-        buttonOpenSDK = (Button) findViewById(R.id.buttonOpenSDK);
-        onceBtn = (Button) findViewById(R.id.onceBtn);
-        twiceBtn = (Button) findViewById(R.id.twiceBtn);
-        thriceBtn = (Button) findViewById(R.id.thriceBtn);
-        getUserInfo = (Button) findViewById(R.id.getUserPoints);
-        getNotificationCount = (Button) findViewById(R.id.getNotificationCount);
-        claimNotificationPage = (Button) findViewById(R.id.claimNotificationPage);
-        dataPointsPage = (Button) findViewById(R.id.launchDatapoints);
-        loginStatus = (Button) findViewById(R.id.loginstatus);
-        rewards = (Button) findViewById(R.id.rewards);
-        countryList = (Button)findViewById(R.id.countryList);
-        loadAdButton = (Button) findViewById(R.id.loadAd);
-        loadVideoAdButton = (Button) findViewById(R.id.loadVideoAd);
-        loadDisplayAdButton = (Button) findViewById(R.id.loadDisplayAd);
-        profile_image = (ImageView) findViewById(R.id.profile_image);
-        publisherbalance = (Button) findViewById(R.id.publisherbalance);
-        buttonOpenSDK.setOnClickListener(new DelayedClickHandler() {
+
+        loggedInLayout = (LinearLayout)findViewById(R.id.loggedin_layout);
+        loggedOutLayout = (LinearLayout)findViewById(R.id.loggedout_layout);
+        loggedInLayout.setVisibility(View.GONE);
+        loggedOutLayout.setVisibility(View.VISIBLE);
+        sdkStatusSwitch = (Switch)findViewById(R.id.sdk_status_switch);
+        sdkStatusSwitch.setChecked(false);
+
+        tapOnceBtn = (Button) findViewById(R.id.tap_once);
+        tapTwiceBtn = (Button) findViewById(R.id.tap_twice);
+        tapThriceBtn = (Button) findViewById(R.id.tap_thrice);
+
+        portalPage = (Button)findViewById(R.id.portal_page);
+        unclaimedPage = (Button)findViewById(R.id.unclaimed_page);
+        rewardsPage = (Button)findViewById(R.id.rewards_page);
+
+        unclaimedCount = (Button)findViewById(R.id.unclaimed_count);
+        supportedCountries = (Button)findViewById(R.id.supported_countries);
+        publisherBalance = (Button)findViewById(R.id.publisher_balance);
+
+
+        showAds = (Button)findViewById(R.id.show_ad);
+        showTwoAds = (Button)findViewById(R.id.show_two_ads);
+        showThreeAdsWithLoader = (Button)findViewById(R.id.show_three_ads_load);
+        showSurvey = (Button)findViewById(R.id.show_survey);
+
+        logoutUser = (Button)findViewById(R.id.user_status_loggedin);
+        loginUser = (Button)findViewById(R.id.user_status_logggedout);
+
+        sdkStatusText = (TextView)findViewById(R.id.sdk_status_text);
+
+        userProfileImage = (ImageView)findViewById(R.id.user_image);
+
+        userEmail = (TextView)findViewById(R.id.user_email);
+        userName = (TextView)findViewById(R.id.user_name);
+        userPoints = (TextView)findViewById(R.id.user_points);
+        userPendingPoints = (TextView)findViewById(R.id.user_ppoints);
+        userPerkId = (TextView)findViewById(R.id.user_id);
+
+        portalPage.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-
                 PerkManager.showPortal(MainActivity.this,"portal");
             }
         });
 
-        onceBtn.setOnClickListener(new DelayedClickHandler() {
+        loginUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PerkManager.showPortal(MainActivity.this,"login");
+            }
+        });
+
+        logoutUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PerkManager.logoutUser(MainActivity.this);
+            }
+        });
+        tapOnceBtn.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
+                PerkManager.trackEvent(MainActivity.this,
+                        TAP_ONCE_EVENT, false, createCustomInterfaceWithId(TAP_ONCE_EVENT));
 
-                if (tapOnceEvent.equals("ON")) {
-                    PerkManager.trackEvent(MainActivity.this,
-                            TAP_ONCE_EVENT, false, createCustomInterfaceWithId(TAP_ONCE_EVENT));
-
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Setting is Off!",
-                            Toast.LENGTH_SHORT).show();
-                }
             }
         });
-
-        getUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userinfoclicked = true;
-                if (PerkManager.fetch(getApplicationContext(),"userInfo") == false) {
-                    Toast.makeText(getApplicationContext(), "Login PERK to see Points",
-                            Toast.LENGTH_SHORT).show();
-                    userinfoclicked = false;
-                }
-            }
-        });
-        twiceBtn.setOnClickListener(new DelayedClickHandler(HALF_SECOND_DELAY) {
+        tapTwiceBtn.setOnClickListener(new DelayedClickHandler(HALF_SECOND_DELAY) {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-
-                if (tapTwiceEvent.equals("ON")) {
-                    PerkManager.trackEvent(MainActivity.this,
-                            TAP_TWICE_EVENT, true, createCustomInterfaceWithId(TAP_TWICE_EVENT));
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Setting is Off!",
-                            Toast.LENGTH_SHORT).show();
-                }
+                PerkManager.trackEvent(MainActivity.this,
+                        TAP_TWICE_EVENT, true, createCustomInterfaceWithId(TAP_TWICE_EVENT));
             }
         });
 
-        thriceBtn.setOnClickListener(new DelayedClickHandler(HALF_SECOND_DELAY) {
+        tapThriceBtn.setOnClickListener(new DelayedClickHandler(HALF_SECOND_DELAY) {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-
-                if (tapThriceEvent.equals("ON")) {
-                    PerkManager.trackEvent(MainActivity.this,
-                            TAP_THRICE_EVENT, false, createCustomInterfaceWithId(TAP_THRICE_EVENT));
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Setting is Off!",
-                            Toast.LENGTH_SHORT).show();
-                }
+                PerkManager.trackEvent(MainActivity.this,
+                        TAP_THRICE_EVENT, false, createCustomInterfaceWithId(TAP_THRICE_EVENT));
             }
         });
 
-        countryList.setOnClickListener(new View.OnClickListener() {
+        supportedCountries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PerkManager.fetch(MainActivity.this,"supportedCountries");
             }
         });
 
-        getNotificationCount.setOnClickListener(new DelayedClickHandler() {
+        unclaimedCount.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
@@ -193,7 +203,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        claimNotificationPage.setOnClickListener(new DelayedClickHandler() {
+        unclaimedPage.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
@@ -201,32 +211,17 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        dataPointsPage.setOnClickListener(new DelayedClickHandler() {
+        showSurvey.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-
                 PerkManager.launchSurvey(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
             }
         });
 
 
 
-        loginStatus.setOnClickListener(new DelayedClickHandler() {
-            @Override
-            public void onClick(View v) {
-                super.onClick(v);
-                if (PerkManager.isPerkUserLoggedIn()) {
-                    PerkManager.logoutUser(MainActivity.this);
-                    loginStatus.setText("Login User");
-                }
-                else {
-                    PerkManager.showPortal(MainActivity.this,"login");
-                }
-            }
-        });
-
-        rewards.setOnClickListener(new DelayedClickHandler() {
+        rewardsPage.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
@@ -234,7 +229,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        loadAdButton.setOnClickListener(new DelayedClickHandler() {
+        showAds.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
@@ -243,7 +238,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        loadVideoAdButton.setOnClickListener(new DelayedClickHandler() {
+        showTwoAds.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
@@ -252,7 +247,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        loadDisplayAdButton.setOnClickListener(new DelayedClickHandler() {
+        showThreeAdsWithLoader.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
@@ -261,15 +256,14 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        sdkStatusToggle = (ToggleButton) findViewById(R.id.checkUserToggleStatus);
-        sdkStatusToggle.setOnClickListener(new DelayedClickHandler() {
+        sdkStatusSwitch.setOnClickListener(new DelayedClickHandler() {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
                 PerkManager.togglePerkSdkStatus(MainActivity.this);
             }
         });
-        publisherbalance.setOnClickListener(new View.OnClickListener() {
+        publisherBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PerkManager.fetch(MainActivity.this,"publisherPointBalance");
@@ -321,17 +315,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
     protected void onResume() {
         super.onResume();
 
-        sdkStatusToggle.setChecked(PerkManager.getPerkSDKStatus());
+        sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
         if (PerkManager.isPerkUserLoggedIn() == true) {
-            loginStatus.setText("Logout user");
-            if (sdkStatusToggle.isEnabled()) {
+            if (sdkStatusSwitch.isEnabled()) {
                 PerkManager.fetch(getApplicationContext(),"userInfo");
             }
         }
-        else {
-            loginStatus.setText("Login user");
-        }
-
     }
 
     @Override
@@ -344,15 +333,17 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onInit(boolean statusCode, String statusMessage) {
-        sdkStatusToggle.setChecked(statusCode);
-        sdkStatusToggle.setEnabled(true);
-        loginStatus.setEnabled(true);
+        sdkStatusSwitch.setChecked(statusCode);
+        sdkStatusSwitch.setEnabled(true);
+        sdkStatusText.setText("SDK Enabled");
         if (PerkManager.isPerkUserLoggedIn() == true) {
-            loginStatus.setText("Logout user");
+            loggedInLayout.setVisibility(View.VISIBLE);
+            loggedOutLayout.setVisibility(View.GONE);
             PerkManager.fetch(getApplicationContext(),"userInfo");
         }
         else {
-            loginStatus.setText("Login user");
+            loggedOutLayout.setVisibility(View.VISIBLE);
+            loggedInLayout.setVisibility(View.GONE);
         }
         logger.append(statusMessage + "\n");
         logScrollView.fullScroll(View.FOCUS_DOWN);
@@ -380,7 +371,14 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onSdkStatus(boolean statusCode, boolean sdkStatus) {
-        sdkStatusToggle.setChecked(sdkStatus);
+        sdkStatusSwitch.setChecked(sdkStatus);
+
+        if(sdkStatus) {
+            sdkStatusText.setText("SDK Enabled");
+        }
+        else {
+            sdkStatusText.setText("SDK Disabled");
+        }
         logger.append("sdk status is " + sdkStatus + "\n");
         logScrollView.fullScroll(View.FOCUS_DOWN);
     }
@@ -389,37 +387,21 @@ public class MainActivity extends Activity implements PerkAppInterface {
     public void onUserInformation(boolean statusCode, PerkUserInfo info) {
         if (statusCode == true) {
             try {
-                String userId = info.getUserId();
-                String userEmail = info.getUserEmail();
-                String userFirstName = info.getUserFirstName();
-                String userLastName = info.getUserLastName();
-                String profileImage = info.getUserProfileImageUrl();
-                int userAvailablePoints = info.getUserAvailablePoints();
-                int userPendingPoints = info.getUserPendingPoints();
 
-                if (userinfoclicked == true) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "User Has Total " + userAvailablePoints
-                                    + " Perk Points",
-                            Toast.LENGTH_SHORT).show();
-                    userinfoclicked = false;
-                }
+                userEmail.setText(info.getUserEmail());
+                userName.setText(info.getUserFirstName() + " " + info.getUserLastName());
+                String profileImage = info.getUserProfileImageUrl();
+                userPoints.setText("Points " + info.getUserAvailablePoints());
+                userPendingPoints.setText("Pending Points" + info.getUserPendingPoints());
+                userPerkId.setText("perkID : " + info.getUserId());
+
                 if (profileImage.length() > 0) {
-                    new DownloadImageTask(profile_image).execute(profileImage);
+                    new DownloadImageTask(userProfileImage).execute(profileImage);
                 }
             }catch(Exception e){
-
+                e.printStackTrace();
             }
         }
-        else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "User Has Total " + PerkManager.getPerkUserAvailablePoints()
-                            + " Perk Points",
-                    Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @Override

@@ -24,7 +24,7 @@
                 android:id="@+id/loggedin_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical"
                 android:background="@drawable/border_rect"
                 android:layout_margin="3dp"
@@ -41,7 +41,6 @@
                 <TextView
                     android:id="@+id/user_name"
                     android:layout_weight="1"
-                    android:text="Paul Haung"
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
@@ -49,7 +48,6 @@
                 <TextView
                     android:id="@+id/user_email"
                     android:layout_weight="1"
-                    android:text="paul@perk.com"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -57,21 +55,18 @@
                     android:id="@+id/user_points"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:text="Perk Points : 23333"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/user_ppoints"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:text="Pending Points : 155"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/user_id"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:text="perk ID : 212121"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <LinearLayout
@@ -82,7 +77,7 @@
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal">
                     <Button
-                        android:id="@+id/user_status_logout"
+                        android:id="@+id/user_status_loggedin"
                         android:text="Logout User"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -100,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="3dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:background="@drawable/border_rect"
                 android:weightSum="10"
                 android:layout_weight="6">
@@ -133,7 +128,7 @@
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal">
                 <Button
-                    android:id="@+id/user_status_login"
+                    android:id="@+id/user_status_logggedout"
                     android:text="Login User"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -154,12 +149,14 @@
                 android:background="@drawable/border_rect"
                 android:layout_weight="2">
                 <TextView
+                    android:id="@+id/sdk_status_text"
                     android:text="SDK Disabled"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Switch
+                    android:id="@+id/sdk_status_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -216,16 +213,19 @@
                         android:layout_gravity="center_horizontal"
                         android:text="Portal Pages"/>
                     <Button
+                        android:id="@+id/portal_page"
                         android:text="Portal Page"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/unclaimed_page"
                         android:text="Unclaimed Page"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/rewards_page"
                         android:text="Rewards Page"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
@@ -243,16 +243,19 @@
                         android:layout_gravity="center_horizontal"
                         android:text="Fetchable Pages"/>
                     <Button
+                        android:id="@+id/unclaimed_count"
                         android:text="Unclaimed Count"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/supported_countries"
                         android:text="Supported Countries"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/publisher_balance"
                         android:text="Publisher Balance"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
@@ -270,21 +273,25 @@
                         android:layout_gravity="center_horizontal"
                         android:text="Serving Ads"/>
                     <Button
+                        android:id="@+id/show_ad"
                         android:text="Show Ad"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/show_survey"
                         android:text="Show Survey"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/show_two_ads"
                         android:text="Show 2 Ads"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/show_three_ads_load"
                         android:text="Show 3 Ads W/Loader"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
@@ -299,6 +306,7 @@
         android:orientation="vertical"
         android:layout_weight="2">
         <ScrollView
+            android:id="@+id/log_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView

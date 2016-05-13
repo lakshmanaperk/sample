@@ -79,9 +79,14 @@
                     <Button
                         android:id="@+id/user_status_loggedin"
                         android:text="Logout User"
+                        android:background="@drawable/button_rect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         />
                     <ImageView
                         android:layout_width="30dp"
@@ -131,7 +136,12 @@
                     android:id="@+id/user_status_logggedout"
                     android:text="Login User"
                     android:layout_width="wrap_content"
+                    android:background="@drawable/button_rect"
                     android:layout_height="wrap_content"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
                     android:layout_marginRight="5dp"
                     />
                     <ImageView
@@ -176,6 +186,11 @@
                     android:text="TAP ONCE"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:background="@drawable/button_rect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Button
@@ -183,6 +198,11 @@
                     android:text="TAP TWICE (Custom)"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:background="@drawable/button_rect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Button
@@ -190,6 +210,11 @@
                     android:text="TAP THRICE"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:layout_margin="3dp"
+                    android:padding="5dp"
+                    android:background="@drawable/button_rect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -211,24 +236,42 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:layout_marginBottom="5dp"
                         android:text="Portal Pages"/>
                     <Button
                         android:id="@+id/portal_page"
                         android:text="Portal Page"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/unclaimed_page"
                         android:text="Unclaimed Page"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/rewards_page"
                         android:text="Rewards Page"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -241,60 +284,101 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="15dp"
                         android:text="Fetchable Pages"/>
                     <Button
                         android:id="@+id/unclaimed_count"
                         android:text="Unclaimed Count"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/supported_countries"
                         android:text="Supported Countries"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/publisher_balance"
                         android:text="Publisher Balance"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="3">
+                    android:layout_marginTop="-8dp"
+                    android:layout_weight="2">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="15dp"
                         android:text="Serving Ads"/>
                     <Button
                         android:id="@+id/show_ad"
                         android:text="Show Ad"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
+                        android:background="@drawable/button_rect"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/show_survey"
                         android:text="Show Survey"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/show_two_ads"
                         android:text="Show 2 Ads"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_height="wrap_content"/>
                     <Button
                         android:id="@+id/show_three_ads_load"
                         android:text="Show 3 Ads W/Loader"
                         android:layout_gravity="center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/button_rect"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
         </LinearLayout>
@@ -303,11 +387,12 @@
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/border_rect"
         android:orientation="vertical"
         android:layout_weight="2">
         <ScrollView
             android:id="@+id/log_container"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/sdk_event_log"

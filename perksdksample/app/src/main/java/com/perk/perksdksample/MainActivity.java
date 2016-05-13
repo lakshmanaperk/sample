@@ -159,6 +159,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 PerkManager.logoutUser(MainActivity.this);
+                loggedInLayout.setVisibility(View.GONE);
+                loggedOutLayout.setVisibility(View.VISIBLE);
             }
         });
         tapOnceBtn.setOnClickListener(new DelayedClickHandler() {
@@ -387,6 +389,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
     public void onUserInformation(boolean statusCode, PerkUserInfo info) {
         if (statusCode == true) {
             try {
+
+                loggedInLayout.setVisibility(View.VISIBLE);
+                loggedOutLayout.setVisibility(View.GONE);
 
                 userEmail.setText(info.getUserEmail());
                 userName.setText(info.getUserFirstName() + " " + info.getUserLastName());

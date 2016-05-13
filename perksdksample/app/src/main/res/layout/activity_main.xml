@@ -3,6 +3,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:weightSum="36"
+              android:id="@+id/main"
                     android:orientation="vertical">
 
     <LinearLayout
@@ -308,7 +309,7 @@
                         android:textStyle="bold"
                         android:layout_marginBottom="5dp"
                         android:textSize="15dp"
-                        android:text="Fetchable Pages"/>
+                        android:text="Other Fetchable Data"/>
                     <Button
                         android:id="@+id/unclaimed_count"
                         android:text="Unclaimed Count"
@@ -422,7 +423,8 @@
         <ScrollView
             android:id="@+id/log_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:fillViewport="true"
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/sdk_event_log"
                 android:layout_width="wrap_content"

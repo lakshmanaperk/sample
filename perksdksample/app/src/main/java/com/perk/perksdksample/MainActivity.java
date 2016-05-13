@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
@@ -72,11 +73,11 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     IntentFilter perkManagerFilter;
 
-    LinearLayout loggedInLayout , loggedOutLayout,borderView;
+    LinearLayout loggedInLayout , loggedOutLayout,borderView,main;
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    float b_x,b_y;
+    float b_x,b_y,last_b_y;
     ImageView userProfileImage,userStatusIn, userStatusOut;
 
 
@@ -142,12 +143,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         sdkStatusSwitch.setEnabled(false);
 
         borderView = (LinearLayout)findViewById(R.id.border);
-
+        main = (LinearLayout)findViewById(R.id.main);
         borderView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 b_x = borderView.getX();
                 b_y = borderView.getY();
+                last_b_y = borderView.getY();
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(borderView);
                 borderView.startDrag(data, shadowBuilder, borderView, 0);
@@ -161,6 +163,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public boolean onDrag(View v, DragEvent event) {
                 b_x = borderView.getX();
                 b_y = borderView.getY();
+                float sheight = logScrollView.getLayoutParams().height;
+                sheight =  sheight + (b_y - last_b_y);
+                logScrollView.getLayoutParams().height = (int)sheight;
+                main.invalidate();
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
                         break;

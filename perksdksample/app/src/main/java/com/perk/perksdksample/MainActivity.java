@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,7 +77,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    ImageView userProfileImage;
+    ImageView userProfileImage,userStatusIn, userStatusOut;
 
 
     @Override
@@ -118,7 +119,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
         unclaimedCount = (Button)findViewById(R.id.unclaimed_count);
         supportedCountries = (Button)findViewById(R.id.supported_countries);
         publisherBalance = (Button)findViewById(R.id.publisher_balance);
-
+        userStatusIn = (ImageView)findViewById(R.id.user_status_in);
+        userStatusOut = (ImageView)findViewById(R.id.user_status_out);
 
         showAds = (Button)findViewById(R.id.show_ad);
         showTwoAds = (Button)findViewById(R.id.show_two_ads);
@@ -150,6 +152,35 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 PerkManager.showPortal(MainActivity.this,"login");
+            }
+        });
+
+        userStatusIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(PerkManager.isPerkUserLoggedIn()) {
+                    Toast.makeText(
+                            getApplicationContext(), "User is Logged in",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(), "User is Logged out",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        userStatusOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(PerkManager.isPerkUserLoggedIn()) {
+                    Toast.makeText(
+                            getApplicationContext(), "User is Logged in",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(), "User is Logged out",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -398,8 +429,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 userEmail.setText(info.getUserEmail());
                 userName.setText(info.getUserFirstName() + " " + info.getUserLastName());
                 String profileImage = info.getUserProfileImageUrl();
-                userPoints.setText("Points " + info.getUserAvailablePoints());
-                userPendingPoints.setText("Pending Points" + info.getUserPendingPoints());
+                userPoints.setText("Points : " + info.getUserAvailablePoints());
+                userPendingPoints.setText("Pending Points : " + info.getUserPendingPoints());
                 userPerkId.setText("perkID : " + info.getUserId());
 
                 if (profileImage.length() > 0) {

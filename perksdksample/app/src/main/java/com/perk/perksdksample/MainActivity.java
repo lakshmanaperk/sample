@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -73,13 +74,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     IntentFilter perkManagerFilter;
 
-    LinearLayout loggedInLayout , loggedOutLayout,borderView,main;
+    LinearLayout loggedInLayout , loggedOutLayout,borderView,main,topLayout,bottomLayout;
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
     float b_x,b_y,last_b_y;
     ImageView userProfileImage,userStatusIn, userStatusOut;
-
+    DisplayMetrics displayMetrics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +101,27 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 return false;
             }
         });
+        displayMetrics = new DisplayMetrics();
+        (MainActivity.this).getWindowManager().getDefaultDisplay()
+                .getMetrics(displayMetrics);
+
         PerkManager.startSession(MainActivity.this,MainActivity.this,"81000a9d5407667548eb3ceec9dc699823a02ba9");
 
         loggedInLayout = (LinearLayout)findViewById(R.id.loggedin_layout);
         loggedOutLayout = (LinearLayout)findViewById(R.id.loggedout_layout);
+        topLayout = (LinearLayout)findViewById(R.id.top_layout);
+        bottomLayout = (LinearLayout)findViewById(R.id.bottom_layout);
+        borderView = (LinearLayout)findViewById(R.id.border);
+
+        LinearLayout.LayoutParams topParams =  new LinearLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.84)));
+        LinearLayout.LayoutParams bottomParams =  new LinearLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.14)));
+        LinearLayout.LayoutParams borderParams =  new LinearLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.02)));
+        topLayout.setLayoutParams(topParams);
+        bottomLayout.setLayoutParams(bottomParams);
+        borderView.setLayoutParams(borderParams);
+
+
+
         loggedInLayout.setVisibility(View.GONE);
         loggedOutLayout.setVisibility(View.VISIBLE);
         sdkStatusSwitch = (Switch)findViewById(R.id.sdk_status_switch);
@@ -142,7 +160,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         userPerkId = (TextView)findViewById(R.id.user_id);
         sdkStatusSwitch.setEnabled(false);
 
-        borderView = (LinearLayout)findViewById(R.id.border);
+
         main = (LinearLayout)findViewById(R.id.main);
         borderView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -349,6 +367,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 PerkManager.fetch(MainActivity.this,"publisherPointBalance");
             }
         });
+    }
+
+    public  float  getHeightForView(float screenShare) {
+        return displayMetrics.heightPixels * screenShare;
+    }
+    public  float  getWidthtForView(float screenShare) {
+        return displayMetrics.widthPixels * screenShare;
     }
 
     private String getInstanceInfo() {

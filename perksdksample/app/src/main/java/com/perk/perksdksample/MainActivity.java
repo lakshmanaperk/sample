@@ -28,6 +28,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -110,7 +111,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
         loggedInLayout = (LinearLayout)findViewById(R.id.loggedin_layout);
         loggedOutLayout = (LinearLayout)findViewById(R.id.loggedout_layout);
-        topLayout = (LinearLayout)findViewById(R.id.top_layout);
+        topLayout = (LinearLayout) findViewById(R.id.top_layout);
         bottomLayout = (RelativeLayout)findViewById(R.id.bottom_layout);
         borderView = (LinearLayout)findViewById(R.id.border);
 

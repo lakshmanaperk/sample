@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
@@ -61,6 +60,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
      */
     CountDownTimer removeViewTimer;
     PerkManagerReceiver receiver;
+    View.DragShadowBuilder shadowBuilder;
     /**
      * In App params
      */
@@ -74,11 +74,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     IntentFilter perkManagerFilter;
 
-    LinearLayout loggedInLayout , loggedOutLayout,borderView,main,topLayout,bottomLayout;
+    LinearLayout loggedInLayout , loggedOutLayout,borderView,main,topLayout;
+    RelativeLayout bottomLayout;
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    float b_x,b_y,last_b_y;
+    float b_x,b_y,last_b_y,bheight;
     ImageView userProfileImage,userStatusIn, userStatusOut;
     DisplayMetrics displayMetrics;
 
@@ -94,13 +95,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         logger = (TextView) findViewById(R.id.sdk_event_log);
         logScrollView = (ScrollView) findViewById(R.id.log_container);
         logger.setText(getInstanceInfo());
-        logger.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                logger.setText("");
-                return false;
-            }
-        });
+//        logger.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                logger.setText("");
+//                return false;
+//            }
+//        });
         displayMetrics = new DisplayMetrics();
         (MainActivity.this).getWindowManager().getDefaultDisplay()
                 .getMetrics(displayMetrics);
@@ -110,12 +111,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         loggedInLayout = (LinearLayout)findViewById(R.id.loggedin_layout);
         loggedOutLayout = (LinearLayout)findViewById(R.id.loggedout_layout);
         topLayout = (LinearLayout)findViewById(R.id.top_layout);
-        bottomLayout = (LinearLayout)findViewById(R.id.bottom_layout);
+        bottomLayout = (RelativeLayout)findViewById(R.id.bottom_layout);
         borderView = (LinearLayout)findViewById(R.id.border);
 
         LinearLayout.LayoutParams topParams =  new LinearLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.84)));
         LinearLayout.LayoutParams bottomParams =  new LinearLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.14)));
-        LinearLayout.LayoutParams borderParams =  new LinearLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.02)));
+        RelativeLayout.LayoutParams borderParams =  new RelativeLayout.LayoutParams(((int)getWidthtForView(1)),(int)(getHeightForView((float)0.02)));
+
         topLayout.setLayoutParams(topParams);
         bottomLayout.setLayoutParams(bottomParams);
         borderView.setLayoutParams(borderParams);
@@ -165,41 +167,82 @@ public class MainActivity extends Activity implements PerkAppInterface {
         borderView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                b_x = borderView.getX();
-                b_y = borderView.getY();
-                last_b_y = borderView.getY();
+                bheight = borderView.getLayoutParams().height;
                 ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(borderView);
+                shadowBuilder = new View.DragShadowBuilder(borderView);
                 borderView.startDrag(data, shadowBuilder, borderView, 0);
                 borderView.setBackgroundColor(Color.parseColor("#00FF00"));
-                return false;
+                return true;
             }
         });
 
-        borderView.setOnDragListener(new View.OnDragListener() {
+
+
+        main.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
-                b_x = borderView.getX();
-                b_y = borderView.getY();
-                float sheight = logScrollView.getLayoutParams().height;
-                sheight =  sheight + (b_y - last_b_y);
-                logScrollView.getLayoutParams().height = (int)sheight;
-                main.invalidate();
+
+                float sheight = 0;
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
+                        last_b_y = event.getY();
+                        sheight = bottomLayout.getLayoutParams().height;
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
+                    case DragEvent.ACTION_DRAG_LOCATION:
+                        b_y = event.getY();
+                        float diff = (last_b_y - b_y );
+                        sheight =  sheight + diff;
+                        bottomLayout.getLayoutParams().height = (int)sheight;
+                        bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        bottomLayout.setY(b_y);
+                        bottomLayout.bringToFront();
+                        main.invalidate();
+                        break;
                     case DragEvent.ACTION_DRAG_EXITED:
+                        borderView.getLayoutParams().height = (int)bheight;
+                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
+                        borderView.bringToFront();
+                        bottomLayout.setY(b_y);
+                        bottomLayout.bringToFront();
+                        main.invalidate();
+                        borderView.setVisibility(View.VISIBLE);
                         break;
                     case DragEvent.ACTION_DROP:
+                        borderView.getLayoutParams().height = (int)bheight;
+                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
+                        borderView.bringToFront();
+                        bottomLayout.setY(b_y);
+                        bottomLayout.bringToFront();
+                        main.invalidate();
+                        borderView.setVisibility(View.VISIBLE);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
+                        borderView.getLayoutParams().height = (int)bheight;
+                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
                         borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
+                        borderView.bringToFront();
+                        bottomLayout.setY(b_y);
+                        bottomLayout.bringToFront();
+                        main.invalidate();
+                        borderView.setVisibility(View.VISIBLE);
                         break;
                     default:
+                        borderView.getLayoutParams().height = (int)bheight;
+                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
+                        borderView.bringToFront();
+                        bottomLayout.setY(b_y);
+                        bottomLayout.bringToFront();
+                        main.invalidate();
+                        borderView.setVisibility(View.VISIBLE);
                         break;
                 }
+                borderView.setVisibility(View.VISIBLE);
+                borderView.bringToFront();
                 return true;
             }
         });
@@ -367,6 +410,15 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 PerkManager.fetch(MainActivity.this,"publisherPointBalance");
             }
         });
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     public  float  getHeightForView(float screenShare) {

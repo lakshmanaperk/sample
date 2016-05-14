@@ -403,29 +403,29 @@
                 </LinearLayout>
         </LinearLayout>
             </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <LinearLayout
         android:id="@+id/border"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#87CEFA">
-
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/bottom_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_rect"
-        android:orientation="vertical">
         <ScrollView
             android:id="@+id/log_container"
             android:layout_width="match_parent"
             android:fillViewport="true"
+            android:layout_below="@+id/border"
+            android:background="#FFFFFF"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/sdk_event_log"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </ScrollView>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

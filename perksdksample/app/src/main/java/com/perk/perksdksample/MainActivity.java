@@ -79,7 +79,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    float b_x,b_y,last_b_y,bheight;
+    float init_y,b_y,last_b_y,bheight;
     ImageView userProfileImage,userStatusIn, userStatusOut;
     DisplayMetrics displayMetrics;
 
@@ -168,6 +168,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public boolean onLongClick(View v) {
                 bheight = borderView.getLayoutParams().height;
+                init_y = bottomLayout.getY();
                 ClipData data = ClipData.newPlainText("", "");
                 shadowBuilder = new View.DragShadowBuilder(borderView);
                 borderView.startDrag(data, shadowBuilder, borderView, 0);
@@ -187,11 +188,15 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     case DragEvent.ACTION_DRAG_STARTED:
                         last_b_y = event.getY();
                         sheight = bottomLayout.getLayoutParams().height;
+                        bottomLayout.setMinimumHeight((int)sheight);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
                     case DragEvent.ACTION_DRAG_LOCATION:
                         b_y = event.getY();
+                        if(init_y < b_y) {
+                            return true;
+                        }
                         float diff = (last_b_y - b_y );
                         sheight =  sheight + diff;
                         bottomLayout.getLayoutParams().height = (int)sheight;
@@ -201,48 +206,38 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         main.invalidate();
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        borderView.getLayoutParams().height = (int)bheight;
-                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
-                        borderView.bringToFront();
-                        bottomLayout.setY(b_y);
+
+                        if(init_y < b_y) {
+                            bottomLayout.setY(init_y);
+                        }
                         bottomLayout.bringToFront();
                         main.invalidate();
-                        borderView.setVisibility(View.VISIBLE);
                         break;
                     case DragEvent.ACTION_DROP:
-                        borderView.getLayoutParams().height = (int)bheight;
-                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
-                        borderView.bringToFront();
-                        bottomLayout.setY(b_y);
+                        if(init_y < b_y) {
+                            bottomLayout.setY(init_y);
+                        }
                         bottomLayout.bringToFront();
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
                         main.invalidate();
-                        borderView.setVisibility(View.VISIBLE);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        borderView.getLayoutParams().height = (int)bheight;
-                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
-                        borderView.bringToFront();
-                        bottomLayout.setY(b_y);
+                        if(init_y < b_y) {
+                            bottomLayout.setY(init_y);
+                        }
                         bottomLayout.bringToFront();
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
                         main.invalidate();
-                        borderView.setVisibility(View.VISIBLE);
                         break;
                     default:
-                        borderView.getLayoutParams().height = (int)bheight;
-                        borderView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
-                        borderView.bringToFront();
-                        bottomLayout.setY(b_y);
+                        if(init_y < b_y) {
+                            bottomLayout.setY(init_y);
+                        }
                         bottomLayout.bringToFront();
+                        borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
                         main.invalidate();
-                        borderView.setVisibility(View.VISIBLE);
                         break;
                 }
-                borderView.setVisibility(View.VISIBLE);
-                borderView.bringToFront();
                 return true;
             }
         });

@@ -96,13 +96,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         logger = (TextView) findViewById(R.id.sdk_event_log);
         logScrollView = (ScrollView) findViewById(R.id.log_container);
         logger.setText(getInstanceInfo());
-//        logger.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                logger.setText("");
-//                return false;
-//            }
-//        });
+        logger.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                logger.setText("");
+                return false;
+            }
+        });
         displayMetrics = new DisplayMetrics();
         (MainActivity.this).getWindowManager().getDefaultDisplay()
                 .getMetrics(displayMetrics);
@@ -185,6 +185,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public boolean onDrag(View v, DragEvent event) {
 
+                int top = (int)logScrollView.getY();
+                Log.d("lakshmana","top of scrview is " + top);
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
                         last_b_y = event.getY();
@@ -194,6 +196,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     case DragEvent.ACTION_DRAG_LOCATION:
                         b_y = event.getY();
                         if(init_y < b_y) {
+                            bottomLayout.getLayoutParams().height = (int)init_y;
+                            bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                            bottomLayout.setY(init_y);
+                            logScrollView.bringToFront();
+                            logScrollView.fullScroll(View.FOCUS_DOWN);
+                            bottomLayout.invalidate();
                             return true;
                         }
                         float diff = (last_b_y - b_y );
@@ -201,39 +209,67 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         bottomLayout.getLayoutParams().height = (int)sheight;
                         bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
                         bottomLayout.setY(b_y);
-                        bottomLayout.bringToFront();
-                        main.invalidate();
+                        logScrollView.bringToFront();
+                        bottomLayout.invalidate();
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
 
                         if(init_y < b_y) {
                             bottomLayout.setY(init_y);
+                            bottomLayout.getLayoutParams().height = (int)init_y;
+                            bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                            bottomLayout.setY(init_y);
+                            logScrollView.bringToFront();
+                            logScrollView.fullScroll(View.FOCUS_DOWN);
+                            bottomLayout.invalidate();
                         }
-                        bottomLayout.bringToFront();
-                        main.invalidate();
+                        logScrollView.fullScroll(View.FOCUS_DOWN);
+                        logScrollView.bringToFront();
+                        bottomLayout.invalidate();
                         break;
                     case DragEvent.ACTION_DROP:
                         if(init_y < b_y) {
                             bottomLayout.setY(init_y);
+                            bottomLayout.getLayoutParams().height = (int)init_y;
+                            bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                            bottomLayout.setY(init_y);
+                            logScrollView.bringToFront();
+                            logScrollView.fullScroll(View.FOCUS_DOWN);
+                            bottomLayout.invalidate();
                         }
-                        bottomLayout.bringToFront();
                         borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
-                        main.invalidate();
+                        logScrollView.fullScroll(View.FOCUS_DOWN);
+                        logScrollView.bringToFront();
+                        bottomLayout.invalidate();
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
                         if(init_y < b_y) {
                             bottomLayout.setY(init_y);
+                            bottomLayout.getLayoutParams().height = (int)init_y;
+                            bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                            bottomLayout.setY(init_y);
+                            logScrollView.bringToFront();
+                            logScrollView.fullScroll(View.FOCUS_DOWN);
+                            bottomLayout.invalidate();
                         }
-                        bottomLayout.bringToFront();
                         borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
-                        main.invalidate();
+                        logScrollView.fullScroll(View.FOCUS_DOWN);
+                        logScrollView.bringToFront();
+                        bottomLayout.invalidate();
                         break;
                     default:
                         if(init_y < b_y) {
                             bottomLayout.setY(init_y);
+                            bottomLayout.getLayoutParams().height = (int)init_y;
+                            bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                            bottomLayout.setY(init_y);
+                            logScrollView.bringToFront();
+                            logScrollView.fullScroll(View.FOCUS_DOWN);
+                            bottomLayout.invalidate();
                         }
-                        bottomLayout.bringToFront();
                         borderView.setBackgroundColor(Color.parseColor("#87CEFA"));
+                        logScrollView.fullScroll(View.FOCUS_DOWN);
+                        logScrollView.bringToFront();
                         main.invalidate();
                         break;
                 }

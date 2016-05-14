@@ -4,13 +4,6 @@
                     android:layout_height="match_parent"
               android:id="@+id/main"
                     android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
@@ -409,8 +402,6 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-    </ScrollView>
     <RelativeLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
@@ -420,7 +411,7 @@
         android:id="@+id/border"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#87CEFA">
     </LinearLayout>
         <ScrollView
@@ -428,7 +419,9 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/border"
             android:background="#FFFFFF"
+            android:isScrollContainer="true"
             android:padding="0dp"
+            android:fillViewport="true"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/sdk_event_log"

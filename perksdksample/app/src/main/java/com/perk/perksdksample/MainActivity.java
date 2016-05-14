@@ -79,7 +79,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    float init_y,b_y,last_b_y,bheight;
+    float init_y = 0,b_y,last_b_y,bheight,initheight,sheight;
     ImageView userProfileImage,userStatusIn, userStatusOut;
     DisplayMetrics displayMetrics;
 
@@ -168,8 +168,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public boolean onLongClick(View v) {
                 bheight = borderView.getLayoutParams().height;
-                init_y = bottomLayout.getY();
                 ClipData data = ClipData.newPlainText("", "");
+                if(init_y <= 0)
+                    init_y = bottomLayout.getY();
                 shadowBuilder = new View.DragShadowBuilder(borderView);
                 borderView.startDrag(data, shadowBuilder, borderView, 0);
                 borderView.setBackgroundColor(Color.parseColor("#00FF00"));
@@ -183,12 +184,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public boolean onDrag(View v, DragEvent event) {
 
-                float sheight = 0;
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
                         last_b_y = event.getY();
-                        sheight = bottomLayout.getLayoutParams().height;
-                        bottomLayout.setMinimumHeight((int)sheight);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
@@ -465,7 +463,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     protected void onResume() {
         super.onResume();
-
+        initheight = bottomLayout.getLayoutParams().height;
+        bottomLayout.setMinimumHeight((int)initheight);
         sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
         if (PerkManager.isPerkUserLoggedIn() == true) {
             if (sdkStatusSwitch.isEnabled()) {

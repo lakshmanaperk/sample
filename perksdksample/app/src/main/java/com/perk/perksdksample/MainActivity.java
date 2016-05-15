@@ -168,13 +168,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         borderView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                bheight = borderView.getLayoutParams().height;
-                ClipData data = ClipData.newPlainText("", "");
-                if(init_y <= 0)
-                    init_y = bottomLayout.getY();
-                shadowBuilder = new View.DragShadowBuilder(borderView);
-                borderView.startDrag(data, shadowBuilder, borderView, 0);
-                borderView.setBackgroundColor(Color.parseColor("#00FF00"));
+//                bheight = borderView.getLayoutParams().height;
+//                ClipData data = ClipData.newPlainText("", "");
+//                if(init_y <= 0)
+//                    init_y = bottomLayout.getY();
+//                shadowBuilder = new View.DragShadowBuilder(borderView);
+//                borderView.startDrag(data, shadowBuilder, borderView, 0);
+//                borderView.setBackgroundColor(Color.parseColor("#00FF00"));
                 return true;
             }
         });

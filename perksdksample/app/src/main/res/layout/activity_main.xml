@@ -419,14 +419,12 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/border"
             android:background="#FFFFFF"
-            android:isScrollContainer="true"
             android:padding="0dp"
-            android:fillViewport="true"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/sdk_event_log"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
         </ScrollView>
     </RelativeLayout>
 </LinearLayout>

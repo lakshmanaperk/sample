@@ -266,6 +266,17 @@ public class MainActivity extends Activity implements PerkAppInterface {
         logScrollView.invalidate();
     }
 
+    public void scrollDownLogger() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                logScrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        }, 300);
+    }
+
+
     public void getInitHeights() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -430,14 +441,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        sdkStatusSwitch.setOnClickListener(new DelayedClickHandler() {
+        sdkStatusSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
+                sdkStatusSwitch.setEnabled(false);
                 sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
                 PerkManager.togglePerkSdkStatus(MainActivity.this);
-                sdkStatusSwitch.setEnabled(false);
-
             }
         });
         publisherBalance.setOnClickListener(new View.OnClickListener() {
@@ -516,8 +525,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onInit(boolean statusCode, String statusMessage) {
-        sdkStatusSwitch.setChecked(statusCode);
         sdkStatusSwitch.setEnabled(true);
+        sdkStatusSwitch.setChecked(statusCode);
         sdkStatusText.setText("SDK Enabled");
         if (PerkManager.isPerkUserLoggedIn() == true) {
             loggedInLayout.setVisibility(View.VISIBLE);
@@ -529,7 +538,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             loggedInLayout.setVisibility(View.GONE);
         }
         logger.append(statusMessage + "\n");
-        logScrollView.fullScroll(View.FOCUS_DOWN);
+        scrollDownLogger();
     }
 
     @Override
@@ -564,7 +573,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             sdkStatusText.setText("SDK Disabled");
         }
         logger.append("sdk status is " + sdkStatus + "\n");
-        logScrollView.fullScroll(View.FOCUS_DOWN);
+        scrollDownLogger();
     }
 
     @Override
@@ -628,7 +637,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     public void onPerkEvent(String message) {
         logger.append(message + "\n");
-        logScrollView.fullScroll(View.FOCUS_DOWN);
+        scrollDownLogger();
         Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT);
 
         //todo:replace hacky event handling with real events including code and message

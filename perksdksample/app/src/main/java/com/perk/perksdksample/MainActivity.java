@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
@@ -80,7 +81,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    float init_y = 0,init_height = 0,b_y,last_b_y,bheight,initheight,sheight;
+    float init_y = 0,init_height = 0,b_y,last_b_y,initheight,sheight,borderViewHeight = 0;
     ImageView userProfileImage,userStatusIn, userStatusOut;
     DisplayMetrics displayMetrics;
 
@@ -165,15 +166,15 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
 
         main = (LinearLayout)findViewById(R.id.main);
+
+
+
+
+
         borderView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                bheight = borderView.getLayoutParams().height;
                 ClipData data = ClipData.newPlainText("", "");
-                if(init_y <= 0)
-                    init_y = bottomLayout.getY();
-                if(init_height <= 0)
-                    init_height = bottomLayout.getLayoutParams().height;
                 shadowBuilder = new View.DragShadowBuilder(borderView);
                 borderView.startDrag(data, shadowBuilder, borderView, 0);
                 borderView.setBackgroundColor(Color.parseColor("#00FF00"));
@@ -186,11 +187,12 @@ public class MainActivity extends Activity implements PerkAppInterface {
         main.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
-                float diff = 0;
+                float diff;
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
                         last_b_y = event.getY();
                         sheight = bottomLayout.getLayoutParams().height;
+                        Log.d("lakshmana","the drag started and sheight at "  + event.getY()  + " " + sheight);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
@@ -206,6 +208,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         last_b_y = b_y;
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
+                        Log.d("lakshmana","the drag existed at " + event.getY() );
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DROP:
@@ -230,6 +233,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 return true;
             }
         });
+        getInitHeights();
         setSDKCalls();
     }
 
@@ -237,17 +241,18 @@ public class MainActivity extends Activity implements PerkAppInterface {
         sheight =  sheight + diff;
         bottomLayout.getLayoutParams().height = (int)sheight;
         bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        logScrollView.getLayoutParams().height = (int)sheight;
+        logScrollView.getLayoutParams().height = (int)(sheight - borderViewHeight);
         logScrollView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         bottomLayout.setY(b_y);
         logScrollView.bringToFront();
         bottomLayout.invalidate();
         logScrollView.invalidate();
+        Log.d("lakshmana","the scroll eventY and height is  " + b_y + "  " + sheight);
     }
     public void setMinHeightForLogView() {
         bottomLayout.getLayoutParams().height = (int)init_height;
         bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        logScrollView.getLayoutParams().height = (int)init_height;
+        logScrollView.getLayoutParams().height = (int)(init_height - borderViewHeight);
         logScrollView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         bottomLayout.setY(init_y);
         logScrollView.bringToFront();
@@ -260,6 +265,21 @@ public class MainActivity extends Activity implements PerkAppInterface {
         logScrollView.bringToFront();
         bottomLayout.invalidate();
         logScrollView.invalidate();
+    }
+
+    public void getInitHeights() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (init_y <= 0)
+                    init_y = bottomLayout.getY();
+                if (init_height <= 0)
+                    init_height = bottomLayout.getLayoutParams().height;
+                if(borderViewHeight <= 0)
+                    borderViewHeight = borderView.getLayoutParams().height;
+            }
+        }, 2000);
     }
 
     public void setSDKCalls() {

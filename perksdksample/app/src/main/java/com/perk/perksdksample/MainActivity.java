@@ -198,37 +198,32 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         b_y = event.getY();
                         if(init_y < b_y) {
                             setMinHeightForLogView();
+                            last_b_y = init_y;
                             return true;
                         }
                         diff = (last_b_y - b_y );
                         setDragHeightForLogView(diff);
+                        last_b_y = b_y;
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        b_y = event.getY();
-                        if(init_y < b_y) {
-                            setMinHeightForLogView();
-                        }
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DROP:
                         b_y = event.getY();
                         if(init_y < b_y) {
                             setMinHeightForLogView();
+                            last_b_y = init_y;
+                            return true;
                         }
+                        diff = (last_b_y - b_y );
+                        setDragHeightForLogView(diff);
+                        last_b_y = b_y;
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        b_y = event.getY();
-                        if(init_y < b_y) {
-                            setMinHeightForLogView();
-                        }
                         setDefaultForLogView();
                         break;
                     default:
-                        b_y = event.getY();
-                        if(init_y < b_y) {
-                            setMinHeightForLogView();
-                        }
                         setDefaultForLogView();
                         break;
                 }

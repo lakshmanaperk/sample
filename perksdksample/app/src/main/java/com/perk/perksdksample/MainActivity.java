@@ -201,15 +201,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                             return true;
                         }
                         diff = (last_b_y - b_y );
-                        sheight =  sheight + diff;
-                        bottomLayout.getLayoutParams().height = (int)sheight;
-                        bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                        logScrollView.getLayoutParams().height = (int)sheight;
-                        logScrollView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                        bottomLayout.setY(b_y);
-                        logScrollView.bringToFront();
-                        bottomLayout.invalidate();
-                        logScrollView.invalidate();
+                        setDragHeightForLogView(diff);
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
                         b_y = event.getY();
@@ -246,6 +238,17 @@ public class MainActivity extends Activity implements PerkAppInterface {
         setSDKCalls();
     }
 
+    public void setDragHeightForLogView(float diff) {
+        sheight =  sheight + diff;
+        bottomLayout.getLayoutParams().height = (int)sheight;
+        bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+        logScrollView.getLayoutParams().height = (int)sheight;
+        logScrollView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+        bottomLayout.setY(b_y);
+        logScrollView.bringToFront();
+        bottomLayout.invalidate();
+        logScrollView.invalidate();
+    }
     public void setMinHeightForLogView() {
         bottomLayout.getLayoutParams().height = (int)init_height;
         bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;

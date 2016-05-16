@@ -192,7 +192,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     case DragEvent.ACTION_DRAG_STARTED:
                         last_b_y = event.getY();
                         sheight = bottomLayout.getLayoutParams().height;
-                        Log.d("lakshmana","the drag started and sheight at "  + event.getY()  + " " + sheight);
+                        Log.d("perksdk","the drag started and sheight at "  + event.getY()  + " " + sheight);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
@@ -208,7 +208,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         last_b_y = b_y;
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        Log.d("lakshmana","the drag existed at " + event.getY() );
+                        Log.d("perksdk","the drag existed at " + event.getY() );
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DROP:
@@ -247,7 +247,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         logScrollView.bringToFront();
         bottomLayout.invalidate();
         logScrollView.invalidate();
-        Log.d("lakshmana","the scroll eventY and height is  " + b_y + "  " + sheight);
+        Log.d("perksdk","the scroll eventY and height is  " + b_y + "  " + sheight);
     }
     public void setMinHeightForLogView() {
         bottomLayout.getLayoutParams().height = (int)init_height;

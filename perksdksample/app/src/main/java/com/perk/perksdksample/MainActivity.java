@@ -29,7 +29,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -81,7 +80,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
 
-    float init_y = 0,init_height = 0,b_y,last_b_y,initheight,sheight,borderViewHeight = 0;
+    float init_bottom_y = 0,init_bottom_height = 0,bottom_drag_y = 0,last_bottom_drag_y = 0,bottomHeight,borderViewHeight = 0;
     ImageView userProfileImage,userStatusIn, userStatusOut;
     DisplayMetrics displayMetrics;
 
@@ -190,37 +189,37 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 float diff;
                 switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
-                        last_b_y = event.getY();
-                        sheight = bottomLayout.getLayoutParams().height;
-                        Log.d("perksdk","the drag started and sheight at "  + event.getY()  + " " + sheight);
+                        last_bottom_drag_y = event.getY();
+                        bottomHeight = bottomLayout.getLayoutParams().height;
+                        Log.d("perksdk","the drag started and sheight at "  + event.getY()  + " " + bottomHeight);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
                     case DragEvent.ACTION_DRAG_LOCATION:
-                        b_y = event.getY();
-                        if(init_y < b_y) {
+                        bottom_drag_y = event.getY();
+                        if(init_bottom_y < bottom_drag_y) {
                             setMinHeightForLogView();
-                            last_b_y = init_y;
+                            last_bottom_drag_y = init_bottom_y;
                             return true;
                         }
-                        diff = (last_b_y - b_y );
+                        diff = (last_bottom_drag_y - bottom_drag_y );
                         setDragHeightForLogView(diff);
-                        last_b_y = b_y;
+                        last_bottom_drag_y = bottom_drag_y;
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
                         Log.d("perksdk","the drag existed at " + event.getY() );
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DROP:
-                        b_y = event.getY();
-                        if(init_y < b_y) {
+                        bottom_drag_y = event.getY();
+                        if(init_bottom_y < bottom_drag_y) {
                             setMinHeightForLogView();
-                            last_b_y = init_y;
+                            last_bottom_drag_y = init_bottom_y;
                             return true;
                         }
-                        diff = (last_b_y - b_y );
+                        diff = (last_bottom_drag_y - bottom_drag_y );
                         setDragHeightForLogView(diff);
-                        last_b_y = b_y;
+                        last_bottom_drag_y = bottom_drag_y;
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
@@ -238,23 +237,23 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     public void setDragHeightForLogView(float diff) {
-        sheight =  sheight + diff;
-        bottomLayout.getLayoutParams().height = (int)sheight;
+        bottomHeight =  bottomHeight + diff;
+        bottomLayout.getLayoutParams().height = (int)bottomHeight;
         bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        logScrollView.getLayoutParams().height = (int)(sheight - borderViewHeight);
+        logScrollView.getLayoutParams().height = (int)(bottomHeight - borderViewHeight);
         logScrollView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        bottomLayout.setY(b_y);
+        bottomLayout.setY(bottom_drag_y);
         logScrollView.bringToFront();
         bottomLayout.invalidate();
         logScrollView.invalidate();
-        Log.d("perksdk","the scroll eventY and height is  " + b_y + "  " + sheight);
+        Log.d("perksdk","the scroll eventY and height is  " + bottom_drag_y + "  " + bottomHeight);
     }
     public void setMinHeightForLogView() {
-        bottomLayout.getLayoutParams().height = (int)init_height;
+        bottomLayout.getLayoutParams().height = (int)init_bottom_height;
         bottomLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        logScrollView.getLayoutParams().height = (int)(init_height - borderViewHeight);
+        logScrollView.getLayoutParams().height = (int)(init_bottom_height - borderViewHeight);
         logScrollView.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        bottomLayout.setY(init_y);
+        bottomLayout.setY(init_bottom_y);
         logScrollView.bringToFront();
         bottomLayout.invalidate();
         logScrollView.invalidate();
@@ -272,12 +271,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (init_y <= 0)
-                    init_y = bottomLayout.getY();
-                if (init_height <= 0)
-                    init_height = bottomLayout.getLayoutParams().height;
+                if (init_bottom_y <= 0)
+                    init_bottom_y = bottomLayout.getY();
+                if (init_bottom_height <= 0)
+                    init_bottom_height = bottomLayout.getLayoutParams().height;
                 if(borderViewHeight <= 0)
                     borderViewHeight = borderView.getLayoutParams().height;
+                bottomLayout.setMinimumHeight((int)init_bottom_height);
             }
         }, 2000);
     }
@@ -498,8 +498,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     protected void onResume() {
         super.onResume();
-        initheight = bottomLayout.getLayoutParams().height;
-        bottomLayout.setMinimumHeight((int)initheight);
         sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
         if (PerkManager.isPerkUserLoggedIn() == true) {
             if (sdkStatusSwitch.isEnabled()) {

@@ -273,7 +273,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void run() {
                 logScrollView.fullScroll(View.FOCUS_DOWN);
             }
-        }, 300);
+        }, 200);
     }
 
 

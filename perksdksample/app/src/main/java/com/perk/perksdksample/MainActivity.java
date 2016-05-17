@@ -294,10 +294,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     public void setSDKCalls() {
-        portalPage.setOnClickListener(new DelayedClickHandler() {
+        portalPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
                 PerkManager.showPortal(MainActivity.this,"portal");
             }
         });
@@ -346,10 +345,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 loggedOutLayout.setVisibility(View.VISIBLE);
             }
         });
-        tapOnceBtn.setOnClickListener(new DelayedClickHandler() {
+        tapOnceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
                 PerkManager.trackEvent(MainActivity.this,
                         TAP_ONCE_EVENT, false, createCustomInterfaceWithId(TAP_ONCE_EVENT));
 
@@ -380,62 +378,53 @@ public class MainActivity extends Activity implements PerkAppInterface {
             }
         });
 
-        unclaimedCount.setOnClickListener(new DelayedClickHandler() {
+        unclaimedCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
                 PerkManager.fetch(MainActivity.this,"notifications");
             }
         });
 
-        unclaimedPage.setOnClickListener(new DelayedClickHandler() {
+        unclaimedPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
                 PerkManager.showPortal(MainActivity.this,"unclaimed");
             }
         });
 
-        showSurvey.setOnClickListener(new DelayedClickHandler() {
+        showSurvey.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                super.onClick(v);
                 PerkManager.launchSurvey(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
             }
         });
 
 
 
-        rewardsPage.setOnClickListener(new DelayedClickHandler() {
+        rewardsPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
                 PerkManager.showPortal(getApplicationContext(),"rewards");
             }
         });
 
-        showAds.setOnClickListener(new DelayedClickHandler() {
+        showAds.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                super.onClick(v);
-
                 PerkManager.showAds(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7",1,false);
             }
         });
 
-        showTwoAds.setOnClickListener(new DelayedClickHandler() {
+        showTwoAds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
-
                 PerkManager.showAds(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7",2,false);
             }
         });
 
-        showThreeAdsWithLoader.setOnClickListener(new DelayedClickHandler() {
+        showThreeAdsWithLoader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                super.onClick(v);
 
                 PerkManager.showAds(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c",3,true);
             }

@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.appsaholic.CommercialBreakSDKActivity"
+        <activity android:name="com.cbs.activities.CommercialBreakSDKActivity"
                   android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_VIEW" />
@@ -67,7 +67,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="4242000" />
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

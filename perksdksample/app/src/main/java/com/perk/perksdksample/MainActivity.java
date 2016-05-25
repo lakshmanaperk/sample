@@ -11,7 +11,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -155,6 +157,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         sdkStatusText = (TextView)findViewById(R.id.sdk_status_text);
 
         userProfileImage = (ImageView)findViewById(R.id.user_image);
+        userProfileImage.setImageResource(R.drawable.pp);
 
         userEmail = (TextView)findViewById(R.id.user_email);
         userName = (TextView)findViewById(R.id.user_name);
@@ -581,11 +584,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 userPerkId.setText("perkID : " + info.getUserId());
 
                 if (profileImage.length() > 0) {
-                    userProfileImage.setBackgroundColor(getResources().getColor(android.R.color.white));
                     new DownloadImageTask(userProfileImage).execute(profileImage);
                 }
                 else {
-                    userProfileImage.setBackgroundColor(getResources().getColor(android.R.color.white));
+                    userProfileImage.setImageResource(R.drawable.pp);
                 }
             }catch(Exception e){
                 e.printStackTrace();

@@ -581,7 +581,11 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 userPerkId.setText("perkID : " + info.getUserId());
 
                 if (profileImage.length() > 0) {
+                    userProfileImage.setBackgroundColor(getResources().getColor(android.R.color.white));
                     new DownloadImageTask(userProfileImage).execute(profileImage);
+                }
+                else {
+                    userProfileImage.setBackgroundColor(getResources().getColor(android.R.color.white));
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -664,6 +668,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         protected void onPostExecute(Bitmap result) {
             bmImage.setVisibility(View.VISIBLE);
             bmImage.setImageBitmap(result);
+            bmImage.invalidate();
         }
     }
 

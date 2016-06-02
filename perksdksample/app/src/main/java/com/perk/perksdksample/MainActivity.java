@@ -398,7 +398,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         showSurvey.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                PerkManager.launchSurvey(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7");
+                PerkManager.launchSurvey(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
             }
         });
 
@@ -429,7 +429,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
 
-                PerkManager.showAds(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c",3,true);
+                PerkManager.showAds(MainActivity.this, "05536119cdbdf1c7baff4c0427a467c5a1745ff7",3,true);
             }
         });
 

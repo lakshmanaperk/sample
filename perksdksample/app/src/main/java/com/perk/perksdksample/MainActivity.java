@@ -74,6 +74,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     TextView userName,userEmail,userPoints,userPendingPoints,userPerkId,logger,sdkStatusText;
 
+    boolean earningDialogShown = false;
     IntentFilter perkManagerFilter;
 
     LinearLayout loggedInLayout , loggedOutLayout,borderView,main,topLayout;
@@ -647,8 +648,15 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onTrackEvent(boolean statusCode, String notificationText, int pointEarned) {
-        if(statusCode == true)
-            showEarningDialog(notificationText,pointEarned);
+        if(statusCode == true) {
+            if (earningDialogShown == false) {
+                showEarningDialog(notificationText, pointEarned);
+            }
+            else {
+                showReturnNotification(notificationText,pointEarned);
+                earningDialogShown = false;
+            }
+        }
     }
 
 
@@ -803,6 +811,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 super.onClick(v);
 
                 PerkManager.claimEvent(MainActivity.this);
+                earningDialogShown = true;
                 customEarningDialog.dismiss();
             }
         });
@@ -866,7 +875,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             bmImage.invalidate();
         }
     }
-    public void showReturnNotification() {
+    public void showReturnNotification(String notificationText, int pointsEarned) {
 
 
         if (customReturnDialog != null && customReturnDialog.isShowing()) {
@@ -916,7 +925,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         }
 
         final RelativeLayout notificationTextLayout, claimButtonLayout;
-        TextView notificationText, earnedPoints, earnedPointsBanner;
+        TextView notificationTextView, earnedPoints, earnedPointsBanner;
         ImageButton closeButton;
         Button claimButton;
 
@@ -927,7 +936,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
         notificationTextLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.notificationTextLayout);
         claimButtonLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.claimButtonLayout);
-        notificationText = (TextView) customReturnDialog.findViewById(R.id.notificationText);
+        notificationTextView = (TextView) customReturnDialog.findViewById(R.id.notificationText);
         earnedPoints = (TextView) customReturnDialog.findViewById(R.id.earnedPoints);
         earnedPointsBanner = (TextView) customReturnDialog.findViewById(R.id.earnedPointsBanner);
         claimButton = (Button) customReturnDialog.findViewById(R.id.claimButton);
@@ -945,7 +954,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 .parseColor(backgroundColor));
         claimButtonLayout.setBackgroundColor(Color.parseColor(backgroundColor));
 
-        notificationText.setTextColor(Color.parseColor(fontColor));
+        notificationTextView.setTextColor(Color.parseColor(fontColor));
         earnedPoints.setTextColor(Color.parseColor(fontColor));
         earnedPointsBanner.setTextColor(Color.parseColor(fontColor));
         claimButton.setVisibility(View.GONE);
@@ -961,7 +970,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             earnedPointsBanner.setText("Perk Point!");
         }
 
-        notificationText.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getAchievementNotiticationText());
+        notificationTextView.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getAchievementNotiticationText());
         earnedPoints.setText("+" + totalearnedpoints);
 
         closeButton.setOnClickListener(new DelayedClickHandler() {

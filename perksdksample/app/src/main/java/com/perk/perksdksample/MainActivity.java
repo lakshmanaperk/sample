@@ -42,7 +42,6 @@ import android.widget.Toast;
 
 import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
-import com.perk.perksdk.app.PerkCustomInterface;
 import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
 
@@ -352,7 +351,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 PerkManager.trackEvent(MainActivity.this,
-                        TAP_ONCE_EVENT, false, createCustomInterfaceWithId(TAP_ONCE_EVENT));
+                        TAP_ONCE_EVENT, false);
 
             }
         });
@@ -361,7 +360,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
                 PerkManager.trackEvent(MainActivity.this,
-                        TAP_TWICE_EVENT, true, createCustomInterfaceWithId(TAP_TWICE_EVENT));
+                        TAP_TWICE_EVENT, true);
             }
         });
 
@@ -370,7 +369,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 super.onClick(v);
                 PerkManager.trackEvent(MainActivity.this,
-                        TAP_THRICE_EVENT, false, createCustomInterfaceWithId(TAP_THRICE_EVENT));
+                        TAP_THRICE_EVENT, false);
             }
         });
 
@@ -534,7 +533,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onNotifiationsCount(boolean statusCode, int unreadNotification) {
+    public void onNotificationsCount(boolean statusCode, int unreadNotification) {
         if(statusCode == true) {
             Toast.makeText(
                     getApplicationContext(),
@@ -630,20 +629,214 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onPerkEvent(String message) {
-        logger.append(message + "\n");
-        scrollDownLogger();
-        Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT);
+        public void onPerkEvent(String message) {
+            logger.append(message + "\n");
+            scrollDownLogger();
+            Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT);
 
-        //todo:replace hacky event handling with real events including code and message
-        switch (message) {
-            case "claimNotificationClosed":
-                // do Your Stuff here
-                break;
-            default:
-                break;
+            //todo:replace hacky event handling with real events including code and message
+            switch (message) {
+                case "claimNotificationClosed":
+                    // do Your Stuff here
+                    break;
+                default:
+                    break;
 
+            }
+    }
+
+    @Override
+    public void onTrackEvent(boolean statusCode, String notificationText, int pointEarned) {
+        if(statusCode == true)
+            showEarningDialog(notificationText,pointEarned);
+    }
+
+
+    public void showEarningDialog(String notificationText, int pointsEarned) {
+
+        //Verify that this isn't zero.
+        if (PerkManager.getAchievementPoints() == 0) {
+            return;
         }
+
+        if (customEarningDialog != null && customEarningDialog.isShowing()) {
+            customEarningDialog.dismiss();
+        }
+
+        slideRight = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_right);
+        slideLeft = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_left);
+        flyUp = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_up);
+        flyDown = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_down);
+
+        String offset = "", animation = "", backgroundColor = "", fontColor = "", btnColor = "", btnTextColor = "", closeButtonCheck = "ON";//todo:wat...
+        int timeDelay = 0;
+
+        SharedPreferences prefs = getSharedPreferences(APP_SETTINGS, 0);
+        offset = prefs.getString("offset", "");
+        animation = prefs.getString("animation", "");
+        backgroundColor = prefs.getString("bgColor", "");
+        fontColor = prefs.getString("fontColor", "");
+        btnColor = prefs.getString("btnColor", "");
+        btnTextColor = prefs.getString("btnTextColor", "");
+        closeButtonCheck = prefs.getString("closeButtonCheck", "ON");
+        timeDelay = prefs.getInt("timeDelay", 0);
+
+        if (backgroundColor.equals("")) {
+            backgroundColor = "#333333";
+        }
+
+        if (fontColor.equals("")) {
+            fontColor = "#ffffff";
+        }
+
+        if (btnColor.equals("")) {
+            btnColor = "#69d06e";
+        }
+
+        if (btnTextColor.equals("")) {
+            btnTextColor = "#ffffff";
+        }
+
+        if (timeDelay == 0) {
+            timeDelay = 2;
+        }
+
+        final RelativeLayout notificationTextLayout, claimButtonLayout;
+        TextView notificationTextView, earnedPoints, earnedPointsBanner;
+        Button claimButton;
+        ImageButton closeButton;
+
+
+        customEarningDialog = new Dialog(MainActivity.this);
+        customEarningDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customEarningDialog.setContentView(R.layout.event_notification);
+
+        notificationTextLayout = (RelativeLayout) customEarningDialog.findViewById(R.id.notificationTextLayout);
+        claimButtonLayout = (RelativeLayout) customEarningDialog.findViewById(R.id.claimButtonLayout);
+        notificationTextView = (TextView) customEarningDialog.findViewById(R.id.notificationText);
+        earnedPoints = (TextView) customEarningDialog.findViewById(R.id.earnedPoints);
+        earnedPointsBanner = (TextView) customEarningDialog.findViewById(R.id.earnedPointsBanner);
+        claimButton = (Button) customEarningDialog.findViewById(R.id.claimButton);
+        closeButton = (ImageButton) customEarningDialog.findViewById(R.id.closeButton);
+
+        if (closeButtonCheck.equals("ON")) {
+            customEarningDialog.setCanceledOnTouchOutside(false);
+        }
+        else {
+            customEarningDialog.setCanceledOnTouchOutside(true);
+            closeButton.setVisibility(View.INVISIBLE);
+        }
+
+        notificationTextLayout.setBackgroundColor(Color
+                .parseColor(backgroundColor));
+        claimButtonLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+
+        notificationTextView.setTextColor(Color.parseColor(fontColor));
+        earnedPoints.setTextColor(Color.parseColor(fontColor));
+        earnedPointsBanner.setTextColor(Color.parseColor(fontColor));
+        claimButton.setBackgroundColor(Color.parseColor(btnColor));
+        claimButton.setTextColor(Color.parseColor(btnTextColor));
+
+        customEarningDialog.getWindow().setBackgroundDrawable(
+                new ColorDrawable(Color.TRANSPARENT));
+
+
+        if (pointsEarned > 1) {
+            earnedPointsBanner.setText("Perk Points!");
+            claimButton.setText("Claim");
+        }
+        else {
+            earnedPointsBanner.setText("Perk Point!");
+            claimButton.setText("Claim");
+        }
+
+        notificationTextView.setText("You've earned " + pointsEarned + " Points " + notificationText);
+        earnedPoints.setText("+" + pointsEarned);
+
+        closeButton.setOnClickListener(new DelayedClickHandler() {
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+
+                customEarningDialog.dismiss();
+            }
+        });
+
+
+        ImageButton btnInfo = (ImageButton) customEarningDialog.findViewById(R.id.btnInfo);
+        btnInfo.setOnClickListener(new DelayedClickHandler() {
+
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+            }
+        });
+
+
+        Window window = customEarningDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.copyFrom(window.getAttributes());
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        // Setting up offset according to the custom settings
+        if (offset.equals("Top")) {
+            wlp.gravity = Gravity.TOP;
+        }
+        else if (offset.equals("Center")) {
+            wlp.gravity = Gravity.CENTER_VERTICAL;
+        }
+        else {
+            wlp.gravity = Gravity.BOTTOM;
+        }
+
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+
+        claimButton.setOnClickListener(new DelayedClickHandler() {
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+
+                PerkManager.claimEvent(MainActivity.this);
+                customEarningDialog.dismiss();
+            }
+        });
+
+        customEarningDialog.show();
+
+        if (animation.equals("Slide Left")) {
+            notificationTextLayout.setAnimation(slideLeft);
+        }
+        else if (animation.equals("Slide Right")) {
+            notificationTextLayout.setAnimation(slideRight);
+        }
+        else if (animation.equals("Fly Up")) {
+            notificationTextLayout.setAnimation(flyUp);
+        }
+        else if (animation.equals("Fly Down")) {
+            notificationTextLayout.setAnimation(flyDown);
+        }
+        else {
+            notificationTextLayout.setAnimation(null);
+        }
+
+        removeViewTimer = new CountDownTimer(timeDelay * 5000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                fadeOutAndHideImage(notificationTextLayout);
+            }
+
+        }.start();
+
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -673,376 +866,175 @@ public class MainActivity extends Activity implements PerkAppInterface {
             bmImage.invalidate();
         }
     }
+    public void showReturnNotification() {
 
 
+        if (customReturnDialog != null && customReturnDialog.isShowing()) {
+            customReturnDialog.dismiss();
+        }
+
+        slideRight = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_right);
+        slideLeft = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_left);
+        flyUp = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_up);
+        flyDown = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_down);
+
+        String offset = "", animation = "", backgroundColor = "", fontColor = "", btnColor = "", btnTextColor = "", closeButtonCheck = "ON";//todo:wat...
+        int timeDelay = 0;
+
+        SharedPreferences prefs = getSharedPreferences(APP_SETTINGS, 0);
+        offset = prefs.getString("offset", "");
+        animation = prefs.getString("animation", "");
+        backgroundColor = prefs.getString("bgColor", "");
+        fontColor = prefs.getString("fontColor", "");
+        btnColor = prefs.getString("btnColor", "");
+        btnTextColor = prefs.getString("btnTextColor", "");
+        closeButtonCheck = prefs.getString("closeButtonCheck", "ON");
+        timeDelay = prefs.getInt("timeDelay", 0);
+
+        if (backgroundColor.equals("")) {
+            backgroundColor = "#333333";
+        }
+
+        if (fontColor.equals("")) {
+            fontColor = "#ffffff";
+        }
+
+        if (btnColor.equals("")) {
+            btnColor = "#69d06e";
+        }
+
+        if (btnTextColor.equals("")) {
+            btnTextColor = "#ffffff";
+        }
+
+        if (timeDelay == 0) {
+            timeDelay = 2;
+        }
+
+        final RelativeLayout notificationTextLayout, claimButtonLayout;
+        TextView notificationText, earnedPoints, earnedPointsBanner;
+        ImageButton closeButton;
+        Button claimButton;
 
 
+        customReturnDialog = new Dialog(MainActivity.this);
+        customReturnDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customReturnDialog.setContentView(R.layout.event_notification);
 
-    private PerkCustomInterface createCustomInterfaceWithId(final String eventId) {
-        return new PerkCustomInterface() {
+        notificationTextLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.notificationTextLayout);
+        claimButtonLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.claimButtonLayout);
+        notificationText = (TextView) customReturnDialog.findViewById(R.id.notificationText);
+        earnedPoints = (TextView) customReturnDialog.findViewById(R.id.earnedPoints);
+        earnedPointsBanner = (TextView) customReturnDialog.findViewById(R.id.earnedPointsBanner);
+        claimButton = (Button) customReturnDialog.findViewById(R.id.claimButton);
+        closeButton = (ImageButton) customReturnDialog.findViewById(R.id.closeButton);
+
+        if (closeButtonCheck.equals("ON")) {
+            customReturnDialog.setCanceledOnTouchOutside(false);
+        }
+        else {
+            customReturnDialog.setCanceledOnTouchOutside(true);
+            closeButton.setVisibility(View.INVISIBLE);
+        }
+
+        notificationTextLayout.setBackgroundColor(Color
+                .parseColor(backgroundColor));
+        claimButtonLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+
+        notificationText.setTextColor(Color.parseColor(fontColor));
+        earnedPoints.setTextColor(Color.parseColor(fontColor));
+        earnedPointsBanner.setTextColor(Color.parseColor(fontColor));
+        claimButton.setVisibility(View.GONE);
+        customReturnDialog.getWindow().setBackgroundDrawable(
+                new ColorDrawable(Color.TRANSPARENT));
+
+        int totalearnedpoints = PerkManager.getEventTotalPoints();
+
+        if (totalearnedpoints > 1) {
+            earnedPointsBanner.setText("Perk Points!");
+        }
+        else {
+            earnedPointsBanner.setText("Perk Point!");
+        }
+
+        notificationText.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getAchievementNotiticationText());
+        earnedPoints.setText("+" + totalearnedpoints);
+
+        closeButton.setOnClickListener(new DelayedClickHandler() {
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+
+                customReturnDialog.dismiss();
+            }
+        });
+
+
+        ImageButton btnInfo = (ImageButton) customReturnDialog.findViewById(R.id.btnInfo);
+        btnInfo.setOnClickListener(new DelayedClickHandler() {
 
             @Override
-            public void showEarningDialog() {
+            public void onClick(View v) {
+                super.onClick(v);
+            }
 
-                //Verify that this isn't zero.
-                if (PerkManager.getAchievementPoints() == 0) {
-                    return;
-                }
-
-                if (customEarningDialog != null && customEarningDialog.isShowing()) {
-                    customEarningDialog.dismiss();
-                }
-
-                slideRight = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_right);
-                slideLeft = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_left);
-                flyUp = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_up);
-                flyDown = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_down);
-
-                String offset = "", animation = "", backgroundColor = "", fontColor = "", btnColor = "", btnTextColor = "", closeButtonCheck = "ON";//todo:wat...
-                int timeDelay = 0;
-
-                SharedPreferences prefs = getSharedPreferences(APP_SETTINGS, 0);
-                offset = prefs.getString("offset", "");
-                animation = prefs.getString("animation", "");
-                backgroundColor = prefs.getString("bgColor", "");
-                fontColor = prefs.getString("fontColor", "");
-                btnColor = prefs.getString("btnColor", "");
-                btnTextColor = prefs.getString("btnTextColor", "");
-                closeButtonCheck = prefs.getString("closeButtonCheck", "ON");
-                timeDelay = prefs.getInt("timeDelay", 0);
-
-                if (backgroundColor.equals("")) {
-                    backgroundColor = "#333333";
-                }
-
-                if (fontColor.equals("")) {
-                    fontColor = "#ffffff";
-                }
-
-                if (btnColor.equals("")) {
-                    btnColor = "#69d06e";
-                }
-
-                if (btnTextColor.equals("")) {
-                    btnTextColor = "#ffffff";
-                }
-
-                if (timeDelay == 0) {
-                    timeDelay = 2;
-                }
-
-                final RelativeLayout notificationTextLayout, claimButtonLayout;
-                TextView notificationText, earnedPoints, earnedPointsBanner;
-                Button claimButton;
-                ImageButton closeButton;
+        });
 
 
-                customEarningDialog = new Dialog(MainActivity.this);
-                customEarningDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                customEarningDialog.setContentView(R.layout.event_notification);
+        Window window = customReturnDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.copyFrom(window.getAttributes());
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-                notificationTextLayout = (RelativeLayout) customEarningDialog.findViewById(R.id.notificationTextLayout);
-                claimButtonLayout = (RelativeLayout) customEarningDialog.findViewById(R.id.claimButtonLayout);
-                notificationText = (TextView) customEarningDialog.findViewById(R.id.notificationText);
-                earnedPoints = (TextView) customEarningDialog.findViewById(R.id.earnedPoints);
-                earnedPointsBanner = (TextView) customEarningDialog.findViewById(R.id.earnedPointsBanner);
-                claimButton = (Button) customEarningDialog.findViewById(R.id.claimButton);
-                closeButton = (ImageButton) customEarningDialog.findViewById(R.id.closeButton);
+        // Setting up offset according to the custom settings
+        if (offset.equals("Top")) {
+            wlp.gravity = Gravity.TOP;
+        }
+        else if (offset.equals("Center")) {
+            wlp.gravity = Gravity.CENTER_VERTICAL;
+        }
+        else {
+            wlp.gravity = Gravity.BOTTOM;
+        }
 
-                if (closeButtonCheck.equals("ON")) {
-                    customEarningDialog.setCanceledOnTouchOutside(false);
-                }
-                else {
-                    customEarningDialog.setCanceledOnTouchOutside(true);
-                    closeButton.setVisibility(View.INVISIBLE);
-                }
-
-                notificationTextLayout.setBackgroundColor(Color
-                        .parseColor(backgroundColor));
-                claimButtonLayout.setBackgroundColor(Color.parseColor(backgroundColor));
-
-                notificationText.setTextColor(Color.parseColor(fontColor));
-                earnedPoints.setTextColor(Color.parseColor(fontColor));
-                earnedPointsBanner.setTextColor(Color.parseColor(fontColor));
-                claimButton.setBackgroundColor(Color.parseColor(btnColor));
-                claimButton.setTextColor(Color.parseColor(btnTextColor));
-
-                customEarningDialog.getWindow().setBackgroundDrawable(
-                        new ColorDrawable(Color.TRANSPARENT));
-
-                int eventPoint = PerkManager.getAchievementPoints();
-
-                if (eventPoint > 1) {
-                    earnedPointsBanner.setText("Perk Points!");
-                    claimButton.setText("Claim");
-                }
-                else {
-                    earnedPointsBanner.setText("Perk Point!");
-                    claimButton.setText("Claim");
-                }
-
-                notificationText.setText("You've earned " + PerkManager.getAchievementPoints() + " Points " + PerkManager.getAchievementNotiticationText());
-                earnedPoints.setText("+" + PerkManager.getAchievementPoints());
-
-                closeButton.setOnClickListener(new DelayedClickHandler() {
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-
-                        customEarningDialog.dismiss();
-                    }
-                });
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
 
 
-                ImageButton btnInfo = (ImageButton) customEarningDialog.findViewById(R.id.btnInfo);
-                btnInfo.setOnClickListener(new DelayedClickHandler() {
+        customReturnDialog.show();
 
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-                    }
-                });
+        if (animation.equals("Slide Left")) {
+            notificationTextLayout.setAnimation(slideLeft);
+        }
+        else if (animation.equals("Slide Right")) {
+            notificationTextLayout.setAnimation(slideRight);
+        }
+        else if (animation.equals("Fly Up")) {
+            notificationTextLayout.setAnimation(flyUp);
+        }
+        else if (animation.equals("Fly Down")) {
+            notificationTextLayout.setAnimation(flyDown);
+        }
+        else {
+            notificationTextLayout.setAnimation(null);
+        }
 
+        removeViewTimer = new CountDownTimer(timeDelay * 5000, 1000) {
 
-                Window window = customEarningDialog.getWindow();
-                WindowManager.LayoutParams wlp = window.getAttributes();
-                wlp.copyFrom(window.getAttributes());
-                wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-                // Setting up offset according to the custom settings
-                if (offset.equals("Top")) {
-                    wlp.gravity = Gravity.TOP;
-                }
-                else if (offset.equals("Center")) {
-                    wlp.gravity = Gravity.CENTER_VERTICAL;
-                }
-                else {
-                    wlp.gravity = Gravity.BOTTOM;
-                }
-
-                wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-                window.setAttributes(wlp);
-
-                claimButton.setOnClickListener(new DelayedClickHandler() {
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-
-                        PerkManager.claimEvent(MainActivity.this);
-                        customEarningDialog.dismiss();
-                    }
-                });
-
-                customEarningDialog.show();
-
-                if (animation.equals("Slide Left")) {
-                    notificationTextLayout.setAnimation(slideLeft);
-                }
-                else if (animation.equals("Slide Right")) {
-                    notificationTextLayout.setAnimation(slideRight);
-                }
-                else if (animation.equals("Fly Up")) {
-                    notificationTextLayout.setAnimation(flyUp);
-                }
-                else if (animation.equals("Fly Down")) {
-                    notificationTextLayout.setAnimation(flyDown);
-                }
-                else {
-                    notificationTextLayout.setAnimation(null);
-                }
-
-                removeViewTimer = new CountDownTimer(timeDelay * 5000, 1000) {
-
-                    public void onTick(long millisUntilFinished) {
-
-                    }
-
-                    public void onFinish() {
-                        fadeOutAndHideImage(notificationTextLayout);
-                    }
-
-                }.start();
+            public void onTick(long millisUntilFinished) {
 
             }
 
-            @Override
-            public void showReturnNotification() {
-
-
-                if (customReturnDialog != null && customReturnDialog.isShowing()) {
-                    customReturnDialog.dismiss();
-                }
-
-                slideRight = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_right);
-                slideLeft = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_left);
-                flyUp = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_up);
-                flyDown = AnimationUtils.loadAnimation(getApplicationContext(),
-                        R.anim.slide_down);
-
-                String offset = "", animation = "", backgroundColor = "", fontColor = "", btnColor = "", btnTextColor = "", closeButtonCheck = "ON";//todo:wat...
-                int timeDelay = 0;
-
-                SharedPreferences prefs = getSharedPreferences(APP_SETTINGS, 0);
-                offset = prefs.getString("offset", "");
-                animation = prefs.getString("animation", "");
-                backgroundColor = prefs.getString("bgColor", "");
-                fontColor = prefs.getString("fontColor", "");
-                btnColor = prefs.getString("btnColor", "");
-                btnTextColor = prefs.getString("btnTextColor", "");
-                closeButtonCheck = prefs.getString("closeButtonCheck", "ON");
-                timeDelay = prefs.getInt("timeDelay", 0);
-
-                if (backgroundColor.equals("")) {
-                    backgroundColor = "#333333";
-                }
-
-                if (fontColor.equals("")) {
-                    fontColor = "#ffffff";
-                }
-
-                if (btnColor.equals("")) {
-                    btnColor = "#69d06e";
-                }
-
-                if (btnTextColor.equals("")) {
-                    btnTextColor = "#ffffff";
-                }
-
-                if (timeDelay == 0) {
-                    timeDelay = 2;
-                }
-
-                final RelativeLayout notificationTextLayout, claimButtonLayout;
-                TextView notificationText, earnedPoints, earnedPointsBanner;
-                ImageButton closeButton;
-                Button claimButton;
-
-
-                customReturnDialog = new Dialog(MainActivity.this);
-                customReturnDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                customReturnDialog.setContentView(R.layout.event_notification);
-
-                notificationTextLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.notificationTextLayout);
-                claimButtonLayout = (RelativeLayout) customReturnDialog.findViewById(R.id.claimButtonLayout);
-                notificationText = (TextView) customReturnDialog.findViewById(R.id.notificationText);
-                earnedPoints = (TextView) customReturnDialog.findViewById(R.id.earnedPoints);
-                earnedPointsBanner = (TextView) customReturnDialog.findViewById(R.id.earnedPointsBanner);
-                claimButton = (Button) customReturnDialog.findViewById(R.id.claimButton);
-                closeButton = (ImageButton) customReturnDialog.findViewById(R.id.closeButton);
-
-                if (closeButtonCheck.equals("ON")) {
-                    customReturnDialog.setCanceledOnTouchOutside(false);
-                }
-                else {
-                    customReturnDialog.setCanceledOnTouchOutside(true);
-                    closeButton.setVisibility(View.INVISIBLE);
-                }
-
-                notificationTextLayout.setBackgroundColor(Color
-                        .parseColor(backgroundColor));
-                claimButtonLayout.setBackgroundColor(Color.parseColor(backgroundColor));
-
-                notificationText.setTextColor(Color.parseColor(fontColor));
-                earnedPoints.setTextColor(Color.parseColor(fontColor));
-                earnedPointsBanner.setTextColor(Color.parseColor(fontColor));
-                claimButton.setVisibility(View.GONE);
-                customReturnDialog.getWindow().setBackgroundDrawable(
-                        new ColorDrawable(Color.TRANSPARENT));
-
-                int totalearnedpoints = PerkManager.getEventTotalPoints();
-
-                if (totalearnedpoints > 1) {
-                    earnedPointsBanner.setText("Perk Points!");
-                }
-                else {
-                    earnedPointsBanner.setText("Perk Point!");
-                }
-
-                notificationText.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getAchievementNotiticationText());
-                earnedPoints.setText("+" + totalearnedpoints);
-
-                closeButton.setOnClickListener(new DelayedClickHandler() {
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-
-                        customReturnDialog.dismiss();
-                    }
-                });
-
-
-                ImageButton btnInfo = (ImageButton) customReturnDialog.findViewById(R.id.btnInfo);
-                btnInfo.setOnClickListener(new DelayedClickHandler() {
-
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-                    }
-
-                });
-
-
-                Window window = customReturnDialog.getWindow();
-                WindowManager.LayoutParams wlp = window.getAttributes();
-                wlp.copyFrom(window.getAttributes());
-                wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-                // Setting up offset according to the custom settings
-                if (offset.equals("Top")) {
-                    wlp.gravity = Gravity.TOP;
-                }
-                else if (offset.equals("Center")) {
-                    wlp.gravity = Gravity.CENTER_VERTICAL;
-                }
-                else {
-                    wlp.gravity = Gravity.BOTTOM;
-                }
-
-                wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-                window.setAttributes(wlp);
-
-
-                customReturnDialog.show();
-
-                if (animation.equals("Slide Left")) {
-                    notificationTextLayout.setAnimation(slideLeft);
-                }
-                else if (animation.equals("Slide Right")) {
-                    notificationTextLayout.setAnimation(slideRight);
-                }
-                else if (animation.equals("Fly Up")) {
-                    notificationTextLayout.setAnimation(flyUp);
-                }
-                else if (animation.equals("Fly Down")) {
-                    notificationTextLayout.setAnimation(flyDown);
-                }
-                else {
-                    notificationTextLayout.setAnimation(null);
-                }
-
-                removeViewTimer = new CountDownTimer(timeDelay * 5000, 1000) {
-
-                    public void onTick(long millisUntilFinished) {
-
-                    }
-
-                    public void onFinish() {
-                        fadeOutAndHideImage(notificationTextLayout);
-                    }
-
-                }.start();
+            public void onFinish() {
+                fadeOutAndHideImage(notificationTextLayout);
             }
 
-        };
+        }.start();
     }
 }
 

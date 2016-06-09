@@ -550,6 +550,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
                             + " notification pending",
                     Toast.LENGTH_SHORT).show();
         }
+        logger.append("Notification Count : " + unreadNotification + "\n");
+        scrollDownLogger();
     }
 
 
@@ -564,7 +566,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         else {
             sdkStatusText.setText("SDK Disabled");
         }
-        logger.append("sdk status is " + sdkStatus + "\n");
+        logger.append("SDK STATUS : " + sdkStatus + "\n");
         scrollDownLogger();
     }
 
@@ -603,6 +605,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         getApplicationContext(),
                         "Available Countries " + countryList,
                         Toast.LENGTH_SHORT).show();
+                logger.append("Country List: " + countryList + "\n");
+                scrollDownLogger();
             }
         }
         else
@@ -619,13 +623,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     "Publisher Has Total " + Points
                             + " Perk Points",
                     Toast.LENGTH_SHORT).show();
+            logger.append("Publisher Balance : " + Points + "\n");
+            scrollDownLogger();
         }
         else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "User Has Total " + Points
-                            + " Perk Points",
-                    Toast.LENGTH_SHORT).show();
         }
     }
 

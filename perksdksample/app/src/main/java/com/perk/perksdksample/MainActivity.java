@@ -398,7 +398,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         showSurvey.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                PerkManager.launchSurvey(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
+                PerkManager.showAd(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
             }
         });
 
@@ -438,7 +438,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
             public void onClick(View v) {
                 sdkStatusSwitch.setEnabled(false);
                 sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
-                PerkManager.togglePerkSdkStatus(MainActivity.this);
+                PerkManager.toggleSDKStatus(MainActivity.this);
             }
         });
         publisherBalance.setOnClickListener(new View.OnClickListener() {
@@ -612,18 +612,18 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onPublisherBalance(boolean statusCode, int prepaidPoints) {
+    public void onPublisherBalance(boolean statusCode, int Points) {
         if (statusCode == true) {
             Toast.makeText(
                     getApplicationContext(),
-                    "Publisher Has Total " + prepaidPoints
+                    "Publisher Has Total " + Points
                             + " Perk Points",
                     Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(
                     getApplicationContext(),
-                    "User Has Total " + prepaidPoints
+                    "User Has Total " + Points
                             + " Perk Points",
                     Toast.LENGTH_SHORT).show();
         }
@@ -647,13 +647,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onTrackEvent(boolean statusCode, String notificationText, int pointEarned) {
+    public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
         if(statusCode == true) {
             if (earningDialogShown == false) {
-                showEarningDialog(notificationText, pointEarned);
+                showEarningDialog(notificationText, pointsEarned);
             }
             else {
-                showReturnNotification(notificationText,pointEarned);
+                showReturnNotification(notificationText,pointsEarned);
                 earningDialogShown = false;
             }
         }
@@ -961,17 +961,16 @@ public class MainActivity extends Activity implements PerkAppInterface {
         customReturnDialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(Color.TRANSPARENT));
 
-        int totalearnedpoints = PerkManager.getEventTotalPoints();
 
-        if (totalearnedpoints > 1) {
+        if (pointsEarned > 1) {
             earnedPointsBanner.setText("Perk Points!");
         }
         else {
             earnedPointsBanner.setText("Perk Point!");
         }
 
-        notificationTextView.setText(" Congrats" + "\n" + "You've earned " + totalearnedpoints + " Points " + PerkManager.getAchievementNotiticationText());
-        earnedPoints.setText("+" + totalearnedpoints);
+        notificationTextView.setText(" Congrats" + "\n" + "You've earned " + pointsEarned + " Points " + notificationText);
+        earnedPoints.setText("+" + pointsEarned);
 
         closeButton.setOnClickListener(new DelayedClickHandler() {
             @Override

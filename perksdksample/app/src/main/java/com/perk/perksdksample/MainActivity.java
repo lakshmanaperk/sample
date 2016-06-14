@@ -274,7 +274,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                logScrollView.fullScroll(View.FOCUS_DOWN);
+                logScrollView.fullScroll(View.FOCUS_UP);
             }
         }, 200);
     }
@@ -517,6 +517,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onInit(boolean statusCode, String statusMessage) {
+        logger.setText("onInit \n"  + "statusCode : " + statusCode + "\n" +
+                " status message " + statusMessage + "\n" + logger.getText());
+        scrollDownLogger();
+
         sdkStatusSwitch.setEnabled(true);
         sdkStatusSwitch.setChecked(statusCode);
         sdkStatusText.setText("SDK Enabled");
@@ -529,12 +533,14 @@ public class MainActivity extends Activity implements PerkAppInterface {
             loggedOutLayout.setVisibility(View.VISIBLE);
             loggedInLayout.setVisibility(View.GONE);
         }
-        logger.append(statusMessage + "\n");
-        scrollDownLogger();
+
     }
 
     @Override
     public void onNotificationsCount(boolean statusCode, int unreadNotification) {
+        logger.setText("onNotificationsCount \n"  + "statusCode : " + statusCode + "\n" +
+                "notifications Count : " + unreadNotification + "\n" + logger.getText());
+        scrollDownLogger();
         if(statusCode) {
             Toast.makeText(
                     getApplicationContext(),
@@ -557,6 +563,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onSdkStatus(boolean statusCode, boolean sdkStatus) {
+        logger.setText("onSdkStatus \n"  + "statusCode : " + statusCode + "\n" +
+                "SDK STATUS : " + sdkStatus + "\n" + logger.getText());
+        scrollDownLogger();
         sdkStatusSwitch.setEnabled(true);
         sdkStatusSwitch.setChecked(sdkStatus);
 
@@ -566,8 +575,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
         else {
             sdkStatusText.setText("SDK Disabled");
         }
-        logger.append("SDK STATUS : " + sdkStatus + "\n");
-        scrollDownLogger();
     }
 
     @Override
@@ -599,6 +606,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onCountryList(boolean statusCode,String countryList) {
+        logger.setText("onCountryList \n"  + "statusCode : " + statusCode + "\n" +
+                "Countries List : " + countryList + "\n" + logger.getText());
+        scrollDownLogger();
         if(statusCode) {
             if (countryList.length() > 0) {
                 Toast.makeText(
@@ -617,6 +627,9 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onPublisherBalance(boolean statusCode, int Points) {
+        logger.setText("onPublisherBalance \n"  + "statusCode : " + statusCode + "\n" +
+                "publisherBalance : " + Points + "\n" + logger.getText());
+        scrollDownLogger();
         if (statusCode) {
             Toast.makeText(
                     getApplicationContext(),
@@ -632,7 +645,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
         public void onPerkEvent(String message) {
-            logger.append(message + "\n");
+            logger.setText("onPerkEvent \n"  + "in_message : " + message + "\n" + logger.getText());
             scrollDownLogger();
 
             switch (message) {
@@ -647,6 +660,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
+        logger.setText("onTrackEvent \n"  + "statusCode : " + statusCode + "\n" +
+                "notificationText : " + notificationText + "\n" +
+                   "pointsEarned : " + pointsEarned +  "\n"  + logger.getText());
+        scrollDownLogger();
         if(statusCode) {
             if (earningDialogShown == false) {
                 showEarningDialog(notificationText, pointsEarned);

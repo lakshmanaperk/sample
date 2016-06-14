@@ -517,7 +517,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onInit(boolean statusCode, String statusMessage) {
-        logger.setText("onInit \n"  + "statusCode : " + statusCode + "\n" +
+        logger.setText("onInit \n\n"  + "statusCode : " + statusCode + "\n" +
                 " status message " + statusMessage + "\n" + logger.getText());
         scrollDownLogger();
 
@@ -538,7 +538,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onNotificationsCount(boolean statusCode, int unreadNotification) {
-        logger.setText("onNotificationsCount \n"  + "statusCode : " + statusCode + "\n" +
+        logger.setText("onNotificationsCount \n\n"  + "statusCode : " + statusCode + "\n" +
                 "notifications Count : " + unreadNotification + "\n" + logger.getText());
         scrollDownLogger();
         if(statusCode) {
@@ -563,7 +563,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onSdkStatus(boolean statusCode, boolean sdkStatus) {
-        logger.setText("onSdkStatus \n"  + "statusCode : " + statusCode + "\n" +
+        logger.setText("onSdkStatus \n\n"  + "statusCode : " + statusCode + "\n" +
                 "SDK STATUS : " + sdkStatus + "\n" + logger.getText());
         scrollDownLogger();
         sdkStatusSwitch.setEnabled(true);
@@ -581,6 +581,15 @@ public class MainActivity extends Activity implements PerkAppInterface {
     public void onUserInformation(boolean statusCode, PerkUserInfo info) {
         if (statusCode) {
             try {
+
+                logger.setText("onUserInformation \n\n"  + "statusCode : " + statusCode + "\n" +
+                        "user Fist Name : " + info.getUserFirstName() + "\n" +
+                        "user Last Name  : " + info.getUserLastName() +  "\n" +
+                        "user Available Points : " + info.getUserAvailablePoints() + "\n" +
+                        "user Pending Points  : " + info.getUserPendingPoints() +  "\n" +
+                        "user Perk ID : " + info.getUserId() + "\n" +
+                        "user Profile Image : " + info.getUserProfileImageUrl() +  "\n"+ logger.getText());
+                scrollDownLogger();
 
                 loggedInLayout.setVisibility(View.VISIBLE);
                 loggedOutLayout.setVisibility(View.GONE);
@@ -606,7 +615,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onCountryList(boolean statusCode,String countryList) {
-        logger.setText("onCountryList \n"  + "statusCode : " + statusCode + "\n" +
+        logger.setText("onCountryList \n\n"  + "statusCode : " + statusCode + "\n" +
                 "Countries List : " + countryList + "\n" + logger.getText());
         scrollDownLogger();
         if(statusCode) {
@@ -627,7 +636,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onPublisherBalance(boolean statusCode, int Points) {
-        logger.setText("onPublisherBalance \n"  + "statusCode : " + statusCode + "\n" +
+        logger.setText("onPublisherBalance \n\n"  + "statusCode : " + statusCode + "\n" +
                 "publisherBalance : " + Points + "\n" + logger.getText());
         scrollDownLogger();
         if (statusCode) {
@@ -645,12 +654,16 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
         public void onPerkEvent(String message) {
-            logger.setText("onPerkEvent \n"  + "in_message : " + message + "\n" + logger.getText());
+            logger.setText("onPerkEvent \n\n"  + "in_message : " + message + "\n" + logger.getText());
             scrollDownLogger();
 
             switch (message) {
                 case "claimNotificationClosed":
                     // do Your Stuff here
+                    break;
+                case "userLoggedOut":
+                    loggedInLayout.setVisibility(View.GONE);
+                    loggedOutLayout.setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
@@ -660,7 +673,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
-        logger.setText("onTrackEvent \n"  + "statusCode : " + statusCode + "\n" +
+        logger.setText("onTrackEvent \n\n"  + "statusCode : " + statusCode + "\n" +
                 "notificationText : " + notificationText + "\n" +
                    "pointsEarned : " + pointsEarned +  "\n"  + logger.getText());
         scrollDownLogger();

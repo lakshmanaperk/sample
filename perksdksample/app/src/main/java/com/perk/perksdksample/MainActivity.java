@@ -314,7 +314,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         userStatusIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(PerkManager.isPerkUserLoggedIn()) {
+                if(PerkManager.isUserLoggedIn()) {
                     Toast.makeText(
                             getApplicationContext(), "User is Logged in",
                             Toast.LENGTH_SHORT).show();
@@ -328,7 +328,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         userStatusOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(PerkManager.isPerkUserLoggedIn()) {
+                if(PerkManager.isUserLoggedIn()) {
                     Toast.makeText(
                             getApplicationContext(), "User is Logged in",
                             Toast.LENGTH_SHORT).show();
@@ -398,7 +398,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         showSurvey.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                PerkManager.showAd(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
+                PerkManager.showSurvey(MainActivity.this, "f0c902bd33a74e7d6504696dffedc66e5dbdb47c");
             }
         });
 
@@ -500,7 +500,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     protected void onResume() {
         super.onResume();
         sdkStatusSwitch.setChecked(PerkManager.getPerkSDKStatus());
-        if (PerkManager.isPerkUserLoggedIn() == true) {
+        if (PerkManager.isUserLoggedIn()) {
             if (sdkStatusSwitch.isEnabled()) {
                 PerkManager.fetch(getApplicationContext(),"userInfo");
             }
@@ -520,7 +520,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         sdkStatusSwitch.setEnabled(true);
         sdkStatusSwitch.setChecked(statusCode);
         sdkStatusText.setText("SDK Enabled");
-        if (PerkManager.isPerkUserLoggedIn() == true) {
+        if (PerkManager.isUserLoggedIn()) {
             loggedInLayout.setVisibility(View.VISIBLE);
             loggedOutLayout.setVisibility(View.GONE);
             PerkManager.fetch(getApplicationContext(),"userInfo");
@@ -535,7 +535,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onNotificationsCount(boolean statusCode, int unreadNotification) {
-        if(statusCode == true) {
+        if(statusCode) {
             Toast.makeText(
                     getApplicationContext(),
                     "You have " + unreadNotification
@@ -572,7 +572,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onUserInformation(boolean statusCode, PerkUserInfo info) {
-        if (statusCode == true) {
+        if (statusCode) {
             try {
 
                 loggedInLayout.setVisibility(View.VISIBLE);
@@ -599,7 +599,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onCountryList(boolean statusCode,String countryList) {
-        if(statusCode == true) {
+        if(statusCode) {
             if (countryList.length() > 0) {
                 Toast.makeText(
                         getApplicationContext(),
@@ -617,7 +617,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onPublisherBalance(boolean statusCode, int Points) {
-        if (statusCode == true) {
+        if (statusCode) {
             Toast.makeText(
                     getApplicationContext(),
                     "Publisher Has Total " + Points
@@ -634,9 +634,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         public void onPerkEvent(String message) {
             logger.append(message + "\n");
             scrollDownLogger();
-            Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT);
 
-            //todo:replace hacky event handling with real events including code and message
             switch (message) {
                 case "claimNotificationClosed":
                     // do Your Stuff here
@@ -649,7 +647,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
-        if(statusCode == true) {
+        if(statusCode) {
             if (earningDialogShown == false) {
                 showEarningDialog(notificationText, pointsEarned);
             }

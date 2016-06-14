@@ -54,9 +54,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar">
         </activity>
-        <activity android:name="com.perk.perksdk.sdkads.FacebookAdNetworkActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"/>
         <activity
             android:name="com.aerserv.sdk.view.ASVastInterstitialActivity"
             android:theme="@android:style/Theme.Translucent"

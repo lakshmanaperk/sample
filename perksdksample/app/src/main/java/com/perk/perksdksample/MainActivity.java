@@ -517,8 +517,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onInit(boolean statusCode, String statusMessage) {
-        logger.setText("onInit \n\n"  + "statusCode : " + statusCode + "\n" +
-                " status message " + statusMessage + "\n" + logger.getText());
+        logger.setText("onInit \n\n"  + "-statusCode : " + statusCode + "\n" +
+                " -status message " + statusMessage + "\n" + logger.getText() + "\n\n");
         scrollDownLogger();
 
         sdkStatusSwitch.setEnabled(true);
@@ -538,8 +538,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onNotificationsCount(boolean statusCode, int unreadNotification) {
-        logger.setText("onNotificationsCount \n\n"  + "statusCode : " + statusCode + "\n" +
-                "notifications Count : " + unreadNotification + "\n" + logger.getText());
+        logger.setText("onNotificationsCount \n\n"  + "-statusCode : " + statusCode + "\n" +
+                "-notifications Count : " + unreadNotification + "\n" + logger.getText() + "\n\n");
         scrollDownLogger();
         if(statusCode) {
             Toast.makeText(
@@ -556,15 +556,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
                             + " notification pending",
                     Toast.LENGTH_SHORT).show();
         }
-        logger.append("Notification Count : " + unreadNotification + "\n");
-        scrollDownLogger();
     }
 
 
     @Override
     public void onSdkStatus(boolean statusCode, boolean sdkStatus) {
-        logger.setText("onSdkStatus \n\n"  + "statusCode : " + statusCode + "\n" +
-                "SDK STATUS : " + sdkStatus + "\n" + logger.getText());
+        logger.setText("onSdkStatus \n\n"  + "-statusCode : " + statusCode + "\n" +
+                "-SDK STATUS : " + sdkStatus + "\n" + logger.getText()+ "\n\n");
         scrollDownLogger();
         sdkStatusSwitch.setEnabled(true);
         sdkStatusSwitch.setChecked(sdkStatus);
@@ -582,13 +580,13 @@ public class MainActivity extends Activity implements PerkAppInterface {
         if (statusCode) {
             try {
 
-                logger.setText("onUserInformation \n\n"  + "statusCode : " + statusCode + "\n" +
-                        "user Fist Name : " + info.getUserFirstName() + "\n" +
-                        "user Last Name  : " + info.getUserLastName() +  "\n" +
-                        "user Available Points : " + info.getUserAvailablePoints() + "\n" +
-                        "user Pending Points  : " + info.getUserPendingPoints() +  "\n" +
-                        "user Perk ID : " + info.getUserId() + "\n" +
-                        "user Profile Image : " + info.getUserProfileImageUrl() +  "\n"+ logger.getText());
+                logger.setText("onUserInformation \n\n"  + "-statusCode : " + statusCode + "\n" +
+                        "-user Fist Name : " + info.getUserFirstName() + "\n" +
+                        "-user Last Name  : " + info.getUserLastName() +  "\n" +
+                        "-user Available Points : " + info.getUserAvailablePoints() + "\n" +
+                        "-user Pending Points  : " + info.getUserPendingPoints() +  "\n" +
+                        "-user Perk ID : " + info.getUserId() + "\n" +
+                        "-user Profile Image : " + info.getUserProfileImageUrl() +  "\n"+ logger.getText()+ "\n\n");
                 scrollDownLogger();
 
                 loggedInLayout.setVisibility(View.VISIBLE);
@@ -615,8 +613,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onCountryList(boolean statusCode,String countryList) {
-        logger.setText("onCountryList \n\n"  + "statusCode : " + statusCode + "\n" +
-                "Countries List : " + countryList + "\n" + logger.getText());
+        logger.setText("onCountryList \n\n"  + "-statusCode : " + statusCode + "\n" +
+                "-Countries List : " + countryList + "\n" + logger.getText()+ "\n\n");
         scrollDownLogger();
         if(statusCode) {
             if (countryList.length() > 0) {
@@ -624,8 +622,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         getApplicationContext(),
                         "Available Countries " + countryList,
                         Toast.LENGTH_SHORT).show();
-                logger.append("Country List: " + countryList + "\n");
-                scrollDownLogger();
             }
         }
         else
@@ -636,8 +632,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
     public void onPublisherBalance(boolean statusCode, int Points) {
-        logger.setText("onPublisherBalance \n\n"  + "statusCode : " + statusCode + "\n" +
-                "publisherBalance : " + Points + "\n" + logger.getText());
+        logger.setText("onPublisherBalance \n\n"  + "-statusCode : " + statusCode + "\n" +
+                "-publisherBalance : " + Points + "\n" + logger.getText()+ "\n\n");
         scrollDownLogger();
         if (statusCode) {
             Toast.makeText(
@@ -645,8 +641,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     "Publisher Has Total " + Points
                             + " Perk Points",
                     Toast.LENGTH_SHORT).show();
-            logger.append("Publisher Balance : " + Points + "\n");
-            scrollDownLogger();
         }
         else {
         }
@@ -654,7 +648,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
         public void onPerkEvent(String message) {
-            logger.setText("onPerkEvent \n\n"  + "in_message : " + message + "\n" + logger.getText());
+            logger.setText("onPerkEvent \n\n"  + "-in_message : " + message + "\n" + logger.getText()+ "\n\n");
             scrollDownLogger();
 
             switch (message) {
@@ -675,7 +669,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
         logger.setText("onTrackEvent \n\n"  + "statusCode : " + statusCode + "\n" +
                 "notificationText : " + notificationText + "\n" +
-                   "pointsEarned : " + pointsEarned +  "\n"  + logger.getText());
+                   "pointsEarned : " + pointsEarned +  "\n"  + logger.getText()+ "\n\n");
         scrollDownLogger();
         if(statusCode) {
             if (earningDialogShown == false) {

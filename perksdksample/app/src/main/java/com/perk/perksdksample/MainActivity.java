@@ -860,7 +860,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
         customEarningDialog.show();
         earningDialogShown = true;
-        g
+
         if (animation.equals("Slide Left")) {
             notificationTextLayout.setAnimation(slideLeft);
         }

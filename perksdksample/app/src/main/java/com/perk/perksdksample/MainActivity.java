@@ -509,6 +509,10 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 PerkManager.fetch(getApplicationContext(),"userInfo");
             }
         }
+        else {
+            loggedInLayout.setVisibility(View.GONE);
+            loggedOutLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -522,20 +526,18 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     public void onInit(boolean statusCode, String statusMessage) {
         if(statusCode) {
+            sdkStatusSwitch.setEnabled(true);
             if (statusMessage.equals("0")) {
-                sdkStatusSwitch.setEnabled(true);
                 sdkStatusSwitch.setChecked(false);
                 sdkStatusText.setText("SDK Disabled");
-                logger.setText("\n onInit \n" + "  -- statusCode : " + statusCode + "\n" +
-                        "  -- status message : SDK status is off" + "\n" + logger.getText());
             }
             else if (statusMessage.equals("1")) {
-                sdkStatusSwitch.setEnabled(true);
                 sdkStatusSwitch.setChecked(true);
                 sdkStatusText.setText("SDK Enabled");
-                logger.setText("\n onInit \n" + "  -- statusCode : " + statusCode + "\n" +
-                        "  -- status message : SDK status is on" + "\n" + logger.getText());
             }
+
+            logger.setText("\n onInit \n" + "  -- statusCode : " + statusCode + "\n" +
+                    "  -- status message : " + statusMessage + "\n" + logger.getText());
 
             if (PerkManager.isUserLoggedIn()) {
                 loggedInLayout.setVisibility(View.VISIBLE);
@@ -673,10 +675,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 case "claimNotificationClosed":
                     // do Your Stuff here
                     break;
-                case "userLoggedOut":
-                    loggedInLayout.setVisibility(View.GONE);
-                    loggedOutLayout.setVisibility(View.VISIBLE);
-                    break;
                 default:
                     break;
 
@@ -686,19 +684,21 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
 
-        if(statusCode && isCustomNotification) {
+        if (statusCode && isCustomNotification) {
             if (earningDialogShown == false) {
-                logger.setText("\n onTrackEvent \n"  + "  -- statusCode : " + statusCode + "\n" +
-                        "  -- notificationText : " + notificationText + "\n" +
-                        "  -- pointsEarned : " + pointsEarned +  "\n"  + logger.getText()+ "\n\n");
-                scrollDownLogger();
                 showEarningDialog(notificationText, pointsEarned);
             }
             else {
-                showReturnNotification(notificationText,pointsEarned);
+                showReturnNotification(notificationText, pointsEarned);
                 earningDialogShown = false;
             }
         }
+        if (earningDialogShown == false) {
+            logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
+                    "  -- notificationText : " + notificationText + "\n" +
+                    "  -- pointsEarned : " + pointsEarned + "\n" + logger.getText() + "\n\n");
+        }
+        scrollDownLogger();
     }
 
 
@@ -853,13 +853,14 @@ public class MainActivity extends Activity implements PerkAppInterface {
                 super.onClick(v);
 
                 PerkManager.claimEvent(MainActivity.this);
-                earningDialogShown = true;
                 customEarningDialog.dismiss();
             }
         });
 
-        customEarningDialog.show();
 
+        customEarningDialog.show();
+        earningDialogShown = true;
+        g
         if (animation.equals("Slide Left")) {
             notificationTextLayout.setAnimation(slideLeft);
         }

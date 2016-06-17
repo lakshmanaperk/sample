@@ -687,28 +687,34 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     public void onTrackEvent(boolean statusCode, PerkEventInfo info) {
 
-        if (statusCode && isCustomNotification) {
+        if(statusCode) {
+
             if (earningDialogShown == false) {
-                showEarningDialog(info.getEventNotificationText(), info.getEventTotalPoints());
+                if(info.getTotalCurrency() > 0) {
+                    logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
+                            "  -- notificationText : " + info.getEventNotificationText() + "\n" +
+                            "  -- pointsEarned : " + info.getEventTotalPoints() + "\n" +
+                            "  -- currencyEarned : " + info.getTotalCurrency() + " " + info.getCustomCurrencyType() + logger.getText());
+                }
+                else {
+                    logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
+                            "  -- notificationText : " + info.getEventNotificationText() + "\n" +
+                            "  -- pointsEarned : " + info.getEventTotalPoints() + "\n" + logger.getText());
+                }
             }
-            else {
-                showReturnNotification(info.getEventNotificationText(), info.getEventTotalPoints());
-                earningDialogShown = false;
+
+            if (isCustomNotification) {
+
+                if (earningDialogShown == false) {
+                    showEarningDialog(info.getEventNotificationText(), info.getEventTotalPoints());
+                }
+                else {
+                    showReturnNotification(info.getEventNotificationText(), info.getEventTotalPoints());
+                    earningDialogShown = false;
+                }
             }
         }
-        if (earningDialogShown == false) {
-            if(info.getTotalCurrency() > 0) {
-                logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
-                        "  -- notificationText : " + info.getEventNotificationText() + "\n" +
-                        "  -- pointsEarned : " + info.getEventTotalPoints() + "\n" +
-                        "  -- currencyEarned : " + info.getTotalCurrency() + " " + info.getCustomCurrencyType() + logger.getText());
-            }
-            else {
-                logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
-                        "  -- notificationText : " + info.getEventNotificationText() + "\n" +
-                        "  -- pointsEarned : " + info.getEventTotalPoints() + "\n" + logger.getText());
-            }
-        }
+
         scrollDownLogger();
     }
 
@@ -1080,6 +1086,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
         customReturnDialog.show();
         claimClicked = false;
+        earningDialogShown = false;
 
         if (animation.equals("Slide Left")) {
             notificationTextLayout.setAnimation(slideLeft);

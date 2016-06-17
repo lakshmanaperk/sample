@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.perk.perksdk.PerkManager;
 import com.perk.perksdk.app.PerkAppInterface;
+import com.perk.perksdk.sdkconfig.PerkEventInfo;
 import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
 
@@ -655,7 +656,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     public void onPublisherBalance(boolean statusCode, int Points) {
         logger.setText("\n onPublisherBalance \n"  + "  -- statusCode : " + statusCode + "\n" +
-                "  -- publisherBalance : " + Points + "\n" + logger.getText()+ "\n\n");
+                "  -- publisherBalance : " + Points + "\n" + logger.getText());
         scrollDownLogger();
         if (statusCode) {
             Toast.makeText(
@@ -670,7 +671,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     @Override
         public void onPerkEvent(String message) {
-            logger.setText("\n onPerkEvent \n"  + "  -- in_message : " + message + "\n" + logger.getText()+ "\n\n");
+            logger.setText("\n onPerkEvent \n"  + "  -- in_message : " + message + "\n" + logger.getText());
             scrollDownLogger();
 
             switch (message) {
@@ -684,21 +685,29 @@ public class MainActivity extends Activity implements PerkAppInterface {
     }
 
     @Override
-    public void onTrackEvent(boolean statusCode, String notificationText, int pointsEarned) {
+    public void onTrackEvent(boolean statusCode, PerkEventInfo info) {
 
         if (statusCode && isCustomNotification) {
             if (earningDialogShown == false) {
-                showEarningDialog(notificationText, pointsEarned);
+                showEarningDialog(info.getEventNotificationText(), info.getEventTotalPoints());
             }
             else {
-                showReturnNotification(notificationText, pointsEarned);
+                showReturnNotification(info.getEventNotificationText(), info.getEventTotalPoints());
                 earningDialogShown = false;
             }
         }
         if (earningDialogShown == false) {
-            logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
-                    "  -- notificationText : " + notificationText + "\n" +
-                    "  -- pointsEarned : " + pointsEarned + "\n" + logger.getText() + "\n\n");
+            if(info.getTotalCurrency() > 0) {
+                logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
+                        "  -- notificationText : " + info.getEventNotificationText() + "\n" +
+                        "  -- pointsEarned : " + info.getEventTotalPoints() + "\n" +
+                        "  -- currencyEarned : " + info.getTotalCurrency() + " " + info.getCustomCurrencyType() + logger.getText());
+            }
+            else {
+                logger.setText("\n onTrackEvent \n" + "  -- statusCode : " + statusCode + "\n" +
+                        "  -- notificationText : " + info.getEventNotificationText() + "\n" +
+                        "  -- pointsEarned : " + info.getEventTotalPoints() + "\n" + logger.getText());
+            }
         }
         scrollDownLogger();
     }

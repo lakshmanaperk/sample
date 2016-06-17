@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -74,13 +75,14 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
     TextView userName,userEmail,userPoints,userPendingPoints,userPerkId,logger,sdkStatusText;
 
-    boolean earningDialogShown = false;
+    boolean earningDialogShown = false,claimClicked = false;
     IntentFilter perkManagerFilter;
 
     LinearLayout loggedInLayout , loggedOutLayout,borderView,main,topLayout;
     RelativeLayout bottomLayout;
     ScrollView logScrollView;
     Switch sdkStatusSwitch;
+
 
     float init_bottom_y = 0,init_bottom_height = 0,bottom_drag_y = 0,last_bottom_drag_y = 0,bottomHeight,borderViewHeight = 0;
     ImageView userProfileImage,userStatusIn, userStatusOut;
@@ -811,7 +813,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-
                 customEarningDialog.dismiss();
             }
         });
@@ -851,15 +852,26 @@ public class MainActivity extends Activity implements PerkAppInterface {
             @Override
             public void onClick(View v) {
                 super.onClick(v);
-
                 PerkManager.claimEvent(MainActivity.this);
+                claimClicked = true;
                 customEarningDialog.dismiss();
             }
         });
 
+        customEarningDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(claimClicked == true) {
+                    earningDialogShown = true;
+                }
+                else {
+                    earningDialogShown = false;
+                }
+            }
+        });
 
         customEarningDialog.show();
-        earningDialogShown = true;
+
 
         if (animation.equals("Slide Left")) {
             notificationTextLayout.setAnimation(slideLeft);
@@ -1058,6 +1070,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
 
 
         customReturnDialog.show();
+        claimClicked = false;
 
         if (animation.equals("Slide Left")) {
             notificationTextLayout.setAnimation(slideLeft);

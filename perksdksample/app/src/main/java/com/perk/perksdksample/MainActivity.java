@@ -101,13 +101,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
         logger = (TextView) findViewById(R.id.sdk_event_log);
         logScrollView = (ScrollView) findViewById(R.id.log_container);
         logger.setText(getInstanceInfo());
-//        logger.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                logger.setText("");
-//                return false;
-//            }
-//        });
         displayMetrics = new DisplayMetrics();
         (MainActivity.this).getWindowManager().getDefaultDisplay()
                 .getMetrics(displayMetrics);
@@ -197,7 +190,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
                     case DragEvent.ACTION_DRAG_STARTED:
                         last_bottom_drag_y = event.getY();
                         bottomHeight = bottomLayout.getLayoutParams().height;
-                        Log.d("perksdk","the drag started and sheight at "  + event.getY()  + " " + bottomHeight);
                         break;
                     case DragEvent.ACTION_DRAG_ENTERED:
                         break;
@@ -213,7 +205,6 @@ public class MainActivity extends Activity implements PerkAppInterface {
                         last_bottom_drag_y = bottom_drag_y;
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        Log.d("perksdk","the drag existed at " + event.getY() );
                         setDefaultForLogView();
                         break;
                     case DragEvent.ACTION_DROP:

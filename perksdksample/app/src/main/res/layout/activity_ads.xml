@@ -95,7 +95,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignBottom="@+id/next_ad_timer"
                 android:layout_alignTop="@+id/next_ad_timer"
                 android:layout_toLeftOf="@+id/next_ad_timer"
                 android:singleLine="true"
@@ -129,17 +128,18 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:singleLine="true"
-                android:layout_alignTop="@+id/info_icon"
-                android:layout_alignBottom="@+id/info_icon" />
+                android:layout_alignBaseline="@+id/info_icon"/>
 
             <ImageView
-                android:layout_width="@dimen/next_ad_timer_width_and_height"
-                android:layout_height="@dimen/next_ad_timer_width_and_height"
+                android:layout_width="@dimen/info_icon_width_and_height"
+                android:layout_height="@dimen/info_icon_width_and_height"
                 android:id="@+id/info_icon"
                 android:contentDescription="@string/descriptor_info_icon"
                 android:visibility="visible"
-                android:layout_toRightOf="@+id/flavor_text_watch"
-                android:padding="10dp" />
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/flavor_text_watch">
+
+            </ImageView>
         </RelativeLayout>
 
     </RelativeLayout>

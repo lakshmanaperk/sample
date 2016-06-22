@@ -45,6 +45,9 @@ import com.perk.perksdk.sdkconfig.PerkEventInfo;
 import com.perk.perksdk.sdkconfig.PerkUserInfo;
 import com.perk.perksdk.utils.DelayedClickHandler;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
 import java.io.InputStream;
 
 
@@ -492,6 +495,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
     @Override
     protected void onPause() {
         super.onPause();
+        UpdateManager.unregister();
     }
 
     @Override
@@ -507,6 +511,8 @@ public class MainActivity extends Activity implements PerkAppInterface {
             loggedInLayout.setVisibility(View.GONE);
             loggedOutLayout.setVisibility(View.VISIBLE);
         }
+        CrashManager.register(this);
+        UpdateManager.register(this);
     }
 
     @Override
@@ -514,6 +520,7 @@ public class MainActivity extends Activity implements PerkAppInterface {
         Log.w("Perk Main", "onDestroy");
         super.onDestroy();
         unregisterReceiver(receiver);
+        UpdateManager.unregister();
     }
 
 
